@@ -7,11 +7,9 @@ import food_delivery.entity.FoodDeliveryOrder;
 import food_delivery.entity.SeatInfo;
 import food_delivery.entity.TripOrderInfo;
 import food_delivery.service.FoodDeliveryService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -23,7 +21,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@RunWith(JUnit4.class)
 public class FoodDeliveryControllerTest {
 
     @InjectMocks
@@ -34,7 +31,7 @@ public class FoodDeliveryControllerTest {
     private MockMvc mockMvc;
     private Response response = new Response();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(foodDeliveryController).build();
@@ -55,7 +52,7 @@ public class FoodDeliveryControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/fooddeliveryservice/orders").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -64,7 +61,7 @@ public class FoodDeliveryControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/fooddeliveryservice/orders/d/123"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -73,7 +70,7 @@ public class FoodDeliveryControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/fooddeliveryservice/orders/123"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -82,7 +79,7 @@ public class FoodDeliveryControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/fooddeliveryservice/orders/store/1234"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -91,7 +88,7 @@ public class FoodDeliveryControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/fooddeliveryservice/orders/all"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -102,7 +99,7 @@ public class FoodDeliveryControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/fooddeliveryservice/orders/tripid").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -113,7 +110,7 @@ public class FoodDeliveryControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/fooddeliveryservice/orders/seatno").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -124,7 +121,7 @@ public class FoodDeliveryControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/fooddeliveryservice/orders/dtime").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
 }

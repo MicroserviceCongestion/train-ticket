@@ -6,11 +6,9 @@ import edu.fudan.common.entity.TripAllDetail;
 import edu.fudan.common.entity.TripResponse;
 import edu.fudan.common.util.Response;
 import edu.fudan.common.util.StringUtils;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -23,7 +21,6 @@ import rebook.entity.RebookInfo;
 
 import java.util.Date;
 
-@RunWith(JUnit4.class)
 public class RebookServiceImplTest {
 
     @InjectMocks
@@ -34,7 +31,7 @@ public class RebookServiceImplTest {
 
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -84,7 +81,7 @@ public class RebookServiceImplTest {
                 .thenReturn(re3);
 
         Response result = rebookServiceImpl.rebook(info, headers);
-        Assert.assertEquals("Please pay the different money!", result.getMsg());
+        Assertions.assertEquals("Please pay the different money!", result.getMsg());
     }
 
     @Test
@@ -124,7 +121,7 @@ public class RebookServiceImplTest {
                 Mockito.any(Class.class)))
                 .thenReturn(re3);
         Response result = rebookServiceImpl.payDifference(info, headers);
-        Assert.assertEquals(new Response<>(0, "Can't pay the difference,please try again", null), result);
+        Assertions.assertEquals(new Response<>(0, "Can't pay the difference,please try again", null), result);
     }
 
     @Test
@@ -140,7 +137,7 @@ public class RebookServiceImplTest {
                 new ParameterizedTypeReference<Response<Ticket>>() {
                 })).thenReturn(reTicket);
         Ticket result = rebookServiceImpl.dipatchSeat(StringUtils.Date2String(new Date()), "G1234", "start_station", "dest_station", 2, 100, null,headers);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
 }

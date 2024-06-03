@@ -4,11 +4,9 @@ import edu.fudan.common.entity.RouteInfo;
 import adminroute.service.AdminRouteService;
 import com.alibaba.fastjson.JSONObject;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,7 +17,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@RunWith(JUnit4.class)
 public class AdminRouteControllerTest {
 
     @InjectMocks
@@ -30,7 +27,7 @@ public class AdminRouteControllerTest {
     private MockMvc mockMvc;
     private Response response = new Response();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(adminRouteController).build();
@@ -48,7 +45,7 @@ public class AdminRouteControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/adminrouteservice/adminroute"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -59,7 +56,7 @@ public class AdminRouteControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/adminrouteservice/adminroute").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -68,7 +65,7 @@ public class AdminRouteControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/adminrouteservice/adminroute/routeId"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
 }

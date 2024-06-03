@@ -2,11 +2,9 @@ package travel2.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -25,7 +23,6 @@ import travel2.service.TravelService;
 import java.util.ArrayList;
 import java.util.Date;
 
-@RunWith(JUnit4.class)
 public class TravelControllerTest {
 
     @InjectMocks
@@ -36,7 +33,7 @@ public class TravelControllerTest {
     private MockMvc mockMvc;
     private Response response = new Response();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(travel2Controller).build();
@@ -55,7 +52,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/travel2service/train_types/trip_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -64,7 +61,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/travel2service/routes/trip_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -75,7 +72,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/travel2service/trips/routes").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -86,7 +83,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/travel2service/trips").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -95,7 +92,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/travel2service/trips/trip_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -106,7 +103,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/travel2service/trips").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -115,7 +112,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/travel2service/trips/trip_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -126,7 +123,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/travel2service/trips/left").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(errorList, JSONObject.parseObject(result, ArrayList.class));
+        Assertions.assertEquals(errorList, JSONObject.parseObject(result, ArrayList.class));
     }
 
     @Test
@@ -137,7 +134,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/travel2service/trips/left").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -148,7 +145,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/travel2service/trip_detail").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -157,7 +154,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/travel2service/trips"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -166,7 +163,7 @@ public class TravelControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/travel2service/admin_trip"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
 }

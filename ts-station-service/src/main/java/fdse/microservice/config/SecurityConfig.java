@@ -4,24 +4,25 @@ import edu.fudan.common.security.jwt.JWTFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.web.cors.CorsConfiguration.ALL;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableMethodSecurity
+public class SecurityConfig {
 
     String admin = "ADMIN";
     String stations = "/api/v1/stationservice/stations";
@@ -60,26 +61,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.httpBasic().disable()
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.httpBasic(basic -> basic
                 // close default csrf
-                .csrf().disable()
+                .csrf(csrf -> csrf.disable())
                 // close session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, stations).hasAnyRole(admin)
-                .antMatchers(HttpMethod.PUT, stations).hasAnyRole(admin)
-                .antMatchers(HttpMethod.DELETE, stations).hasAnyRole(admin)
-                .antMatchers("/api/v1/stationservice/**").permitAll()
-                .antMatchers("/swagger-ui.html", "/webjars/**", "/images/**",
-                        "/configuration/**", "/swagger-resources/**", "/v2/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(new JWTFilter(), UsernamePasswordAuthenticationFilter.class);
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeRequests(requests -> requests
+                        .requestMatchers(HttpMethod.POST, stations).hasAnyRole(admin)
+                        .requestMatchers(HttpMethod.PUT, stations).hasAnyRole(admin)
+                        .requestMatchers(HttpMethod.DELETE, stations).hasAnyRole(admin)
+                        .requestMatchers("/api/v1/stationservice/**").permitAll()
+                        .requestMatchers("/swagger-ui.html", "/webjars/**", "/images/**", "/configuration/**", "/swagger-resources/**", "/v2/**").permitAll()
+                        .anyRequest().authenticated())
+                .addFilterBefore(new JWTFilter(), UsernamePasswordAuthenticationFilter.class));
 
         // close cache
-        httpSecurity.headers().cacheControl();
+        httpSecurity.headers(withDefaults());
+        return httpSecurity.build();
     }
 }

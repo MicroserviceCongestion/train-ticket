@@ -5,11 +5,9 @@ import auth.entity.User;
 import auth.repository.UserRepository;
 import auth.service.impl.UserServiceImpl;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
 
-@RunWith(JUnit4.class)
 public class UserServiceImplTest {
 
     @InjectMocks
@@ -32,7 +29,7 @@ public class UserServiceImplTest {
 
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -40,7 +37,7 @@ public class UserServiceImplTest {
     @Test
     public void testSaveUser() {
         User user = new User();
-        Assert.assertEquals(null, userServiceImpl.saveUser(user));
+        Assertions.assertEquals(null, userServiceImpl.saveUser(user));
     }
 
     @Test
@@ -48,7 +45,7 @@ public class UserServiceImplTest {
         List<User> userList = new ArrayList<>();
         userList.add(new User());
         Mockito.when(userRepository.findAll()).thenReturn(userList);
-        Assert.assertEquals(userList, userServiceImpl.getAllUser(headers));
+        Assertions.assertEquals(userList, userServiceImpl.getAllUser(headers));
     }
 
     @Test
@@ -57,14 +54,14 @@ public class UserServiceImplTest {
         User user = new User();
         Mockito.when(userRepository.save(user)).thenReturn(user);
         Mockito.when(passwordEncoder.encode(dto.getPassword())).thenReturn("password");
-        Assert.assertEquals(null, userServiceImpl.createDefaultAuthUser(dto));
+        Assertions.assertEquals(null, userServiceImpl.createDefaultAuthUser(dto));
     }
 
     @Test
     public void testDeleteByUserId() {
         UUID userId = UUID.randomUUID();
         Mockito.doNothing().doThrow(new RuntimeException()).when(userRepository).deleteByUserId(userId.toString());
-        Assert.assertEquals(new Response(1, "DELETE USER SUCCESS", null), userServiceImpl.deleteByUserId(userId.toString(), headers));
+        Assertions.assertEquals(new Response(1, "DELETE USER SUCCESS", null), userServiceImpl.deleteByUserId(userId.toString(), headers));
     }
 
 }

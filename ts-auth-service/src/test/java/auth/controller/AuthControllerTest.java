@@ -4,11 +4,9 @@ import auth.dto.AuthDto;
 import auth.service.UserService;
 import com.alibaba.fastjson.JSONObject;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -20,7 +18,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
-@RunWith(JUnit4.class)
 public class AuthControllerTest {
 
     @InjectMocks
@@ -30,7 +27,7 @@ public class AuthControllerTest {
     private UserService userService;
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
@@ -51,7 +48,7 @@ public class AuthControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/auth").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals("SUCCESS", JSONObject.parseObject(result, Response.class).getMsg());
+        Assertions.assertEquals("SUCCESS", JSONObject.parseObject(result, Response.class).getMsg());
     }
 
 }

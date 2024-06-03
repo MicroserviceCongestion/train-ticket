@@ -2,11 +2,9 @@ package verifycode.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -18,15 +16,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import verifycode.service.VerifyCodeService;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.rmi.MarshalledObject;
 import java.security.Principal;
 import java.util.*;
 
-@RunWith(JUnit4.class)
 public class VerifyCodeControllerTest {
 
     @InjectMocks
@@ -36,7 +33,7 @@ public class VerifyCodeControllerTest {
     private VerifyCodeService verifyCodeService;
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(verifyCodeController).build();
@@ -59,7 +56,7 @@ public class VerifyCodeControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/verifycode/verify/verifyCode"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertTrue(JSONObject.parseObject(result, Boolean.class));
+        Assertions.assertTrue(JSONObject.parseObject(result, Boolean.class));
     }
 
 }

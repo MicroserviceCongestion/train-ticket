@@ -2,11 +2,9 @@ package adminorder.service;
 
 import edu.fudan.common.util.Response;
 import edu.fudan.common.entity.*;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -17,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
-@RunWith(JUnit4.class)
 public class AdminOrderServiceImplTest {
 
     @InjectMocks
@@ -29,7 +26,7 @@ public class AdminOrderServiceImplTest {
     private HttpHeaders headers = new HttpHeaders();
     private HttpEntity requestEntity = new HttpEntity(headers);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -51,7 +48,7 @@ public class AdminOrderServiceImplTest {
                 new ParameterizedTypeReference<Response<ArrayList<Order>>>() {
                 })).thenReturn(re);
         Response result = adminOrderService.getAllOrders(headers);
-        Assert.assertEquals(new Response<>(1, "Get the orders successfully!", new ArrayList<>()), result);
+        Assertions.assertEquals(new Response<>(1, "Get the orders successfully!", new ArrayList<>()), result);
     }
 
     @Test
@@ -73,7 +70,7 @@ public class AdminOrderServiceImplTest {
                 new ParameterizedTypeReference<Response<ArrayList<Order>>>() {
                 })).thenReturn(re);
         Response result = adminOrderService.getAllOrders(headers);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
@@ -81,12 +78,15 @@ public class AdminOrderServiceImplTest {
         Response response = new Response();
         ResponseEntity<Response> re = new ResponseEntity<>(response, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-order-service:12031/api/v1/orderservice/order/" + "orderId",
+                """
+                http://ts-order-service:12031/api/v1/orderservice/order/\
+                orderId\
+                """,
                 HttpMethod.DELETE,
                 requestEntity,
                 Response.class)).thenReturn(re);
         Response result = adminOrderService.deleteOrder("orderId", "G", headers);
-        Assert.assertEquals(new Response<>(null, null, null), result);
+        Assertions.assertEquals(new Response<>(null, null, null), result);
     }
 
     @Test
@@ -94,12 +94,15 @@ public class AdminOrderServiceImplTest {
         Response response = new Response();
         ResponseEntity<Response> re = new ResponseEntity<>(response, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/" + "orderId",
+                """
+                http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/\
+                orderId\
+                """,
                 HttpMethod.DELETE,
                 requestEntity,
                 Response.class)).thenReturn(re);
         Response result = adminOrderService.deleteOrder("orderId", "K", headers);
-        Assert.assertEquals(new Response<>(null, null, null), result);
+        Assertions.assertEquals(new Response<>(null, null, null), result);
     }
 
     @Test
@@ -114,7 +117,7 @@ public class AdminOrderServiceImplTest {
                 requestEntity2,
                 Response.class)).thenReturn(re);
         Response result = adminOrderService.updateOrder(order, headers);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
@@ -129,7 +132,7 @@ public class AdminOrderServiceImplTest {
                 requestEntity2,
                 Response.class)).thenReturn(re);
         Response result = adminOrderService.updateOrder(order, headers);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
@@ -144,7 +147,7 @@ public class AdminOrderServiceImplTest {
                 requestEntity2,
                 Response.class)).thenReturn(re);
         Response result = adminOrderService.addOrder(order, headers);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
@@ -159,6 +162,6 @@ public class AdminOrderServiceImplTest {
                 requestEntity2,
                 Response.class)).thenReturn(re);
         Response result = adminOrderService.addOrder(order, headers);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 }

@@ -2,12 +2,9 @@ package waitorder.service.Impl;
 
 import java.util.Optional;
 import edu.fudan.common.util.Response;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Assertions;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -17,7 +14,6 @@ import waitorder.entity.WaitListOrder;
 import waitorder.repository.WaitListOrderRepository;
 
 
-@RunWith(JUnit4.class)
 public class WaitListOrderServiceImplTest {
 
     @InjectMocks
@@ -28,7 +24,7 @@ public class WaitListOrderServiceImplTest {
 
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }

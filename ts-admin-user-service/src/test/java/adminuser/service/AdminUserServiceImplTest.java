@@ -3,11 +3,9 @@ package adminuser.service;
 import adminuser.dto.UserDto;
 import edu.fudan.common.entity.User;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -18,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@RunWith(JUnit4.class)
 public class AdminUserServiceImplTest {
 
     @InjectMocks
@@ -30,7 +27,7 @@ public class AdminUserServiceImplTest {
     private HttpHeaders headers = new HttpHeaders();
     private HttpEntity requestEntity = new HttpEntity(headers);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -46,7 +43,7 @@ public class AdminUserServiceImplTest {
                 new ParameterizedTypeReference<Response<List<User>>>() {
                 })).thenReturn(re);
         Response result = adminUserServiceImpl.getAllUsers(headers);
-        Assert.assertEquals(new Response<>(1, null, null), result);
+        Assertions.assertEquals(new Response<>(1, null, null), result);
     }
 
     @Test
@@ -54,12 +51,16 @@ public class AdminUserServiceImplTest {
         Response response = new Response<>(1, null, null);
         ResponseEntity<Response> re = new ResponseEntity<>(response, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-user-service:12342/api/v1/userservice/users" + "/" + "userId",
+                """
+                http://ts-user-service:12342/api/v1/userservice/users\
+                /\
+                userId\
+                """,
                 HttpMethod.DELETE,
                 requestEntity,
                 Response.class)).thenReturn(re);
         Response result = adminUserServiceImpl.deleteUser("userId", headers);
-        Assert.assertEquals(new Response<>(1, null, null), result);
+        Assertions.assertEquals(new Response<>(1, null, null), result);
     }
 
     @Test
@@ -74,7 +75,7 @@ public class AdminUserServiceImplTest {
                 requestEntity2,
                 Response.class)).thenReturn(re);
         Response result = adminUserServiceImpl.updateUser(userDto, headers);
-        Assert.assertEquals(new Response<>(1, null, null), result);
+        Assertions.assertEquals(new Response<>(1, null, null), result);
     }
 
     @Test
@@ -84,13 +85,16 @@ public class AdminUserServiceImplTest {
         Response<User> response = new Response<>(1, null, null);
         ResponseEntity<Response<User>> re = new ResponseEntity<>(response, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-user-service:12342/api/v1/userservice/users" + "/register",
+                """
+                http://ts-user-service:12342/api/v1/userservice/users\
+                /register\
+                """,
                 HttpMethod.POST,
                 requestEntity2,
                 new ParameterizedTypeReference<Response<User>>() {
                 })).thenReturn(re);
         Response result = adminUserServiceImpl.addUser(userDto, headers);
-        Assert.assertEquals(new Response<>(1, null, null), result);
+        Assertions.assertEquals(new Response<>(1, null, null), result);
     }
 
 }

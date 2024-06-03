@@ -2,11 +2,9 @@ package user.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -21,7 +19,6 @@ import user.service.UserService;
 
 import java.util.UUID;
 
-@RunWith(JUnit4.class)
 public class UserControllerTest {
 
     @InjectMocks
@@ -32,7 +29,7 @@ public class UserControllerTest {
     private MockMvc mockMvc;
     private Response response = new Response();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
@@ -51,7 +48,7 @@ public class UserControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/userservice/users"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -60,7 +57,7 @@ public class UserControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/userservice/users/user_name"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -69,7 +66,7 @@ public class UserControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/userservice/users/id/user_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -80,7 +77,7 @@ public class UserControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/userservice/users/register").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -90,7 +87,7 @@ public class UserControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/userservice/users/" + userId.toString()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -101,7 +98,7 @@ public class UserControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/userservice/users").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
 }

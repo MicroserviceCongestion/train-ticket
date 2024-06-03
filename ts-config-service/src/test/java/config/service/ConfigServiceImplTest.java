@@ -3,11 +3,9 @@ package config.service;
 import config.entity.Config;
 import config.repository.ConfigRepository;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -17,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import java.util.ArrayList;
 import java.util.List;
 
-@RunWith(JUnit4.class)
 public class ConfigServiceImplTest {
 
     @InjectMocks
@@ -28,7 +25,7 @@ public class ConfigServiceImplTest {
 
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -38,7 +35,7 @@ public class ConfigServiceImplTest {
         Config info = new Config();
         Mockito.when(repository.findByName(info.getName())).thenReturn(info);
         Response result = configServiceImpl.create(info, headers);
-        Assert.assertEquals(new Response<>(0, "Config  already exists.", null), result);
+        Assertions.assertEquals(new Response<>(0, "Config  already exists.", null), result);
     }
 
     @Test
@@ -47,7 +44,7 @@ public class ConfigServiceImplTest {
         Mockito.when(repository.findByName(info.getName())).thenReturn(null);
         Mockito.when(repository.save(Mockito.any(Config.class))).thenReturn(null);
         Response result = configServiceImpl.create(info, headers);
-        Assert.assertEquals(new Response<>(1, "Create success", new Config("", "", "")), result);
+        Assertions.assertEquals(new Response<>(1, "Create success", new Config("", "", "")), result);
     }
 
     @Test
@@ -55,7 +52,7 @@ public class ConfigServiceImplTest {
         Config info = new Config();
         Mockito.when(repository.findByName(info.getName())).thenReturn(null);
         Response result = configServiceImpl.update(info, headers);
-        Assert.assertEquals(new Response<>(0, "Config  doesn't exist.", null), result);
+        Assertions.assertEquals(new Response<>(0, "Config  doesn't exist.", null), result);
     }
 
     @Test
@@ -64,14 +61,14 @@ public class ConfigServiceImplTest {
         Mockito.when(repository.findByName(info.getName())).thenReturn(info);
         Mockito.when(repository.save(Mockito.any(Config.class))).thenReturn(null);
         Response result = configServiceImpl.update(info, headers);
-        Assert.assertEquals(new Response<>(1, "Update success", new Config("", "", "")), result);
+        Assertions.assertEquals(new Response<>(1, "Update success", new Config("", "", "")), result);
     }
 
     @Test
     public void testQuery1() {
         Mockito.when(repository.findByName("name")).thenReturn(null);
         Response result = configServiceImpl.query("name", headers);
-        Assert.assertEquals(new Response<>(0, "No content", null), result);
+        Assertions.assertEquals(new Response<>(0, "No content", null), result);
     }
 
     @Test
@@ -79,14 +76,14 @@ public class ConfigServiceImplTest {
         Config info = new Config();
         Mockito.when(repository.findByName("name")).thenReturn(info);
         Response result = configServiceImpl.query("name", headers);
-        Assert.assertEquals(new Response<>(1, "Success", new Config()), result);
+        Assertions.assertEquals(new Response<>(1, "Success", new Config()), result);
     }
 
     @Test
     public void testDelete1() {
         Mockito.when(repository.findByName("name")).thenReturn(null);
         Response result = configServiceImpl.delete("name", headers);
-        Assert.assertEquals(new Response<>(0, "Config name doesn't exist.", null), result);
+        Assertions.assertEquals(new Response<>(0, "Config name doesn't exist.", null), result);
     }
 
     @Test
@@ -95,7 +92,7 @@ public class ConfigServiceImplTest {
         Mockito.when(repository.findByName("name")).thenReturn(info);
         Mockito.doNothing().doThrow(new RuntimeException()).when(repository).deleteByName("name");
         Response result = configServiceImpl.delete("name", headers);
-        Assert.assertEquals(new Response<>(1, "Delete success", info), result);
+        Assertions.assertEquals(new Response<>(1, "Delete success", info), result);
     }
 
     @Test
@@ -104,14 +101,14 @@ public class ConfigServiceImplTest {
         configList.add(new Config());
         Mockito.when(repository.findAll()).thenReturn(configList);
         Response result = configServiceImpl.queryAll(headers);
-        Assert.assertEquals(new Response<>(1, "Find all  config success", configList), result);
+        Assertions.assertEquals(new Response<>(1, "Find all  config success", configList), result);
     }
 
     @Test
     public void testQueryAll2() {
         Mockito.when(repository.findAll()).thenReturn(null);
         Response result = configServiceImpl.queryAll(headers);
-        Assert.assertEquals(new Response<>(0, "No content", null), result);
+        Assertions.assertEquals(new Response<>(0, "No content", null), result);
     }
 
 }

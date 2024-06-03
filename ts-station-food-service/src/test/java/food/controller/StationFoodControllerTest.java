@@ -3,11 +3,9 @@ package food.controller;
 import com.alibaba.fastjson.JSONObject;
 import edu.fudan.common.util.Response;
 import food.service.StationFoodService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -21,7 +19,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-@RunWith(JUnit4.class)
 public class StationFoodControllerTest {
 
     @InjectMocks
@@ -32,7 +29,7 @@ public class StationFoodControllerTest {
     private MockMvc mockMvc;
     private Response response = new Response();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(stationFoodController).build();
@@ -51,7 +48,7 @@ public class StationFoodControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/foodmapservice/stationfoodstores"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -60,7 +57,7 @@ public class StationFoodControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/foodmapservice/stationfoodstores/station_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -71,7 +68,7 @@ public class StationFoodControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/foodmapservice/stationfoodstores").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
 }

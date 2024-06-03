@@ -2,11 +2,9 @@ package preserveOther.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,7 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import edu.fudan.common.entity.OrderTicketsInfo;
 import preserveOther.service.PreserveOtherService;
 
-@RunWith(JUnit4.class)
 public class PreserveOtherControllerTest {
 
     @InjectMocks
@@ -30,7 +27,7 @@ public class PreserveOtherControllerTest {
     private MockMvc mockMvc;
     private Response response = new Response();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(preserveOtherController).build();
@@ -51,7 +48,7 @@ public class PreserveOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/preserveotherservice/preserveOther").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
 }

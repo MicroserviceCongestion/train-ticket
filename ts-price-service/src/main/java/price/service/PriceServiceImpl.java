@@ -41,7 +41,7 @@ public class PriceServiceImpl implements PriceService {
         } else {
             // modify
             Optional<PriceConfig> op = priceConfigRepository.findById(createAndModifyPriceConfig.getId());
-            if (!op.isPresent()) {
+            if (op.isEmpty()) {
                 priceConfig = new PriceConfig();
                 priceConfig.setId(createAndModifyPriceConfig.getId());
             }else{
@@ -125,7 +125,7 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public Response deletePriceConfig(String pcId, HttpHeaders headers) {
         Optional<PriceConfig> op = priceConfigRepository.findById(pcId);
-        if (!op.isPresent()) {
+        if (op.isEmpty()) {
             PriceServiceImpl.LOGGER.error("[deletePriceConfig][Delete price config error][Price config not found][PriceConfigId: {}]",pcId);
             return new Response<>(0, noThatConfig, null);
         } else {
@@ -138,7 +138,7 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public Response updatePriceConfig(PriceConfig c, HttpHeaders headers) {
         Optional<PriceConfig> op = priceConfigRepository.findById(c.getId());
-        if (!op.isPresent()) {
+        if (op.isEmpty()) {
             PriceServiceImpl.LOGGER.error("[updatePriceConfig][Update price config error][Price config not found][PriceConfigId: {}]",c.getId());
             return new Response<>(0, noThatConfig, null);
         } else {

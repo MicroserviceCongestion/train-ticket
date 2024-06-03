@@ -4,11 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import contacts.entity.Contacts;
 import contacts.service.ContactsService;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -21,7 +19,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
-@RunWith(JUnit4.class)
 public class ContactsControllerTest {
 
     @InjectMocks
@@ -32,7 +29,7 @@ public class ContactsControllerTest {
     private MockMvc mockMvc;
     private Response response = new Response();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(contactsController).build();
@@ -51,7 +48,7 @@ public class ContactsControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/contactservice/contacts"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -62,7 +59,7 @@ public class ContactsControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/contactservice/contacts").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -73,7 +70,7 @@ public class ContactsControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/contactservice/contacts/admin").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -83,7 +80,7 @@ public class ContactsControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/contactservice/contacts/" + contactsId.toString()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -94,7 +91,7 @@ public class ContactsControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/contactservice/contacts").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -104,7 +101,7 @@ public class ContactsControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/contactservice/contacts/account/" + accountId.toString()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -114,7 +111,7 @@ public class ContactsControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/contactservice/contacts/" + id.toString()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
 }

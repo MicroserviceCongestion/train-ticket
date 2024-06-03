@@ -3,11 +3,9 @@ package admintravel.service;
 import edu.fudan.common.entity.AdminTrip;
 import edu.fudan.common.entity.TravelInfo;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -18,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
-@RunWith(JUnit4.class)
 public class AdminTravelServiceImplTest {
 
     @InjectMocks
@@ -30,7 +27,7 @@ public class AdminTravelServiceImplTest {
     private HttpHeaders headers = new HttpHeaders();
     private HttpEntity requestEntity = new HttpEntity(headers);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -52,7 +49,7 @@ public class AdminTravelServiceImplTest {
                 new ParameterizedTypeReference<Response<ArrayList<AdminTrip>>>() {
                 })).thenReturn(re);
         Response result = adminTravelServiceImpl.getAllTravels(headers);
-        Assert.assertEquals(new Response<>(0, null, new ArrayList<>()), result);
+        Assertions.assertEquals(new Response<>(0, null, new ArrayList<>()), result);
     }
 
     @Test
@@ -74,7 +71,7 @@ public class AdminTravelServiceImplTest {
                 new ParameterizedTypeReference<Response<ArrayList<AdminTrip>>>() {
                 })).thenReturn(re);
         Response result = adminTravelServiceImpl.getAllTravels(headers);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
@@ -90,7 +87,7 @@ public class AdminTravelServiceImplTest {
                 requestEntity2,
                 Response.class)).thenReturn(re);
         Response result = adminTravelServiceImpl.addTravel(request, headers);
-        Assert.assertEquals(new Response<>(0, "Admin add new travel failed", null), result);
+        Assertions.assertEquals(new Response<>(0, "Admin add new travel failed", null), result);
     }
 
     @Test
@@ -106,7 +103,7 @@ public class AdminTravelServiceImplTest {
                 requestEntity2,
                 Response.class)).thenReturn(re);
         Response result = adminTravelServiceImpl.addTravel(request, headers);
-        Assert.assertEquals(new Response<>(1, "[Admin add new travel]", null), result);
+        Assertions.assertEquals(new Response<>(1, "[Admin add new travel]", null), result);
     }
 
     @Test
@@ -122,7 +119,7 @@ public class AdminTravelServiceImplTest {
                 requestEntity2,
                 Response.class)).thenReturn(re);
         Response result = adminTravelServiceImpl.addTravel(request, headers);
-        Assert.assertEquals(new Response<>(0, "Admin add new travel failed", null), result);
+        Assertions.assertEquals(new Response<>(0, "Admin add new travel failed", null), result);
     }
 
     @Test
@@ -138,7 +135,7 @@ public class AdminTravelServiceImplTest {
                 requestEntity2,
                 Response.class)).thenReturn(re);
         Response result = adminTravelServiceImpl.addTravel(request, headers);
-        Assert.assertEquals(new Response<>(1, "[Admin add new travel]", null), result);
+        Assertions.assertEquals(new Response<>(1, "[Admin add new travel]", null), result);
     }
 
 
@@ -155,7 +152,7 @@ public class AdminTravelServiceImplTest {
                 requestEntity2,
                 Response.class)).thenReturn(re);
         Response result = adminTravelServiceImpl.updateTravel(request, headers);
-        Assert.assertEquals(new Response<>(1, null, null), result);
+        Assertions.assertEquals(new Response<>(1, null, null), result);
     }
 
     @Test
@@ -171,7 +168,7 @@ public class AdminTravelServiceImplTest {
                 requestEntity2,
                 Response.class)).thenReturn(re);
         Response result = adminTravelServiceImpl.updateTravel(request, headers);
-        Assert.assertEquals(new Response<>(1, null, null), result);
+        Assertions.assertEquals(new Response<>(1, null, null), result);
     }
 
     @Test
@@ -179,12 +176,15 @@ public class AdminTravelServiceImplTest {
         Response response = new Response(1, null, null);
         ResponseEntity<Response> re = new ResponseEntity<>(response, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-travel-service:12346/api/v1/travelservice/trips/" + "GaoTie",
+                """
+                http://ts-travel-service:12346/api/v1/travelservice/trips/\
+                GaoTie\
+                """,
                 HttpMethod.DELETE,
                 requestEntity,
                 Response.class)).thenReturn(re);
         Response result = adminTravelServiceImpl.deleteTravel("GaoTie", headers);
-        Assert.assertEquals(new Response<>(1, null, null), result);
+        Assertions.assertEquals(new Response<>(1, null, null), result);
     }
 
     @Test
@@ -192,12 +192,15 @@ public class AdminTravelServiceImplTest {
         Response response = new Response(1, null, null);
         ResponseEntity<Response> re = new ResponseEntity<>(response, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-travel2-service:16346/api/v1/travel2service/trips/" + "K1024",
+                """
+                http://ts-travel2-service:16346/api/v1/travel2service/trips/\
+                K1024\
+                """,
                 HttpMethod.DELETE,
                 requestEntity,
                 Response.class)).thenReturn(re);
         Response result = adminTravelServiceImpl.deleteTravel("K1024", headers);
-        Assert.assertEquals(new Response<>(1, null, null), result);
+        Assertions.assertEquals(new Response<>(1, null, null), result);
     }
 
 }

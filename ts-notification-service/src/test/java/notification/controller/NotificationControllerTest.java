@@ -4,11 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import edu.fudan.common.util.Response;
 import notification.entity.NotifyInfo;
 import notification.service.NotificationService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -20,7 +18,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@RunWith(JUnit4.class)
 public class NotificationControllerTest {
 
     @InjectMocks
@@ -30,7 +27,7 @@ public class NotificationControllerTest {
     private NotificationService service;
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(notificationController).build();
@@ -51,7 +48,7 @@ public class NotificationControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/notifyservice/notification/preserve_success").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertTrue(JSONObject.parseObject(result, Boolean.class));
+        Assertions.assertTrue(JSONObject.parseObject(result, Boolean.class));
     }
 
     @Test
@@ -62,7 +59,7 @@ public class NotificationControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/notifyservice/notification/order_create_success").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertTrue(JSONObject.parseObject(result, Boolean.class));
+        Assertions.assertTrue(JSONObject.parseObject(result, Boolean.class));
     }
 
     @Test
@@ -73,7 +70,7 @@ public class NotificationControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/notifyservice/notification/order_changed_success").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertTrue(JSONObject.parseObject(result, Boolean.class));
+        Assertions.assertTrue(JSONObject.parseObject(result, Boolean.class));
     }
 
     @Test
@@ -84,7 +81,7 @@ public class NotificationControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/notifyservice/notification/order_cancel_success").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertTrue(JSONObject.parseObject(result, Boolean.class));
+        Assertions.assertTrue(JSONObject.parseObject(result, Boolean.class));
     }
 
 }

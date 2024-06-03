@@ -51,7 +51,7 @@ public class StationServiceImpl implements StationService {
     public Response update(Station info, HttpHeaders headers) {
 
         Optional<Station> op = repository.findById(info.getId());
-        if (!op.isPresent()) {
+        if (op.isEmpty()) {
             StationServiceImpl.LOGGER.error("[update][Update station error][Station not found][StationId: {}]",info.getId());
             return new Response<>(0, "Station not exist", null);
         } else {

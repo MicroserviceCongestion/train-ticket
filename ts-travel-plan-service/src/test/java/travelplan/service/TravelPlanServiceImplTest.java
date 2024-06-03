@@ -1,11 +1,9 @@
 package travelplan.service;
 
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@RunWith(JUnit4.class)
 public class TravelPlanServiceImplTest {
 
     @InjectMocks
@@ -31,7 +28,7 @@ public class TravelPlanServiceImplTest {
 
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -51,7 +48,7 @@ public class TravelPlanServiceImplTest {
                 Mockito.any(ParameterizedTypeReference.class)))
                 .thenReturn(re1);
         Response result = travelPlanServiceImpl.getTransferSearch(info, headers);
-        Assert.assertEquals("Success.", result.getMsg());
+        Assertions.assertEquals("Success.", result.getMsg());
     }
 
     @Test
@@ -87,7 +84,7 @@ public class TravelPlanServiceImplTest {
                 .thenReturn(re3).thenReturn(re3).thenReturn(re4);
 
         Response result = travelPlanServiceImpl.getCheapest(info, headers);
-        Assert.assertEquals("Success", result.getMsg());
+        Assertions.assertEquals("Success", result.getMsg());
     }
 
     @Test
@@ -123,7 +120,7 @@ public class TravelPlanServiceImplTest {
                 .thenReturn(re3).thenReturn(re3).thenReturn(re4);
 
         Response result = travelPlanServiceImpl.getQuickest(info, headers);
-        Assert.assertEquals("Success", result.getMsg());
+        Assertions.assertEquals("Success", result.getMsg());
     }
 
     @Test
@@ -159,7 +156,7 @@ public class TravelPlanServiceImplTest {
                 .thenReturn(re3).thenReturn(re3).thenReturn(re4);
 
         Response result = travelPlanServiceImpl.getMinStation(info, headers);
-        Assert.assertEquals("Success", result.getMsg());
+        Assertions.assertEquals("Success", result.getMsg());
     }
 
 }

@@ -2,11 +2,9 @@ package price.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,7 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import price.entity.PriceConfig;
 import price.service.PriceService;
 
-@RunWith(JUnit4.class)
 public class PriceControllerTest {
 
     @InjectMocks
@@ -30,7 +27,7 @@ public class PriceControllerTest {
     private MockMvc mockMvc;
     private Response response = new Response();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(priceController).build();
@@ -49,7 +46,7 @@ public class PriceControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/priceservice/prices/route_id/train_type"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -58,7 +55,7 @@ public class PriceControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/priceservice/prices"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -69,7 +66,7 @@ public class PriceControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/priceservice/prices").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -80,7 +77,7 @@ public class PriceControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/priceservice/prices").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -91,7 +88,7 @@ public class PriceControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/priceservice/prices").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
 }

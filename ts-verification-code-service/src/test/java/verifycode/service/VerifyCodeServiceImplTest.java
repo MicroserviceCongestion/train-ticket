@@ -1,14 +1,12 @@
 package verifycode.service;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import verifycode.service.impl.VerifyCodeServiceImpl;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
 import java.io.*;
 import java.security.Principal;
 import java.util.Collection;
@@ -16,7 +14,6 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
-@RunWith(JUnit4.class)
 public class VerifyCodeServiceImplTest {
 
     private VerifyCodeServiceImpl verifyCodeServiceImpl = new VerifyCodeServiceImpl();
@@ -559,14 +556,14 @@ public class VerifyCodeServiceImplTest {
     public void testGetImageCode() {
         OutputStream os = System.out;
         Map<String, Object> returnMap = verifyCodeServiceImpl.getImageCode(60, 20, os, request, response, headers);
-        Assert.assertNotNull(returnMap);
-        Assert.assertNotNull(returnMap.get("strEnsure"));
+        Assertions.assertNotNull(returnMap);
+        Assertions.assertNotNull(returnMap.get("strEnsure"));
     }
 
     @Test
     public void testVerifyCode() {
         boolean result = verifyCodeServiceImpl.verifyCode(request, response, "XYZ5", headers);
-        Assert.assertFalse(result);
+        Assertions.assertFalse(result);
     }
 
 }

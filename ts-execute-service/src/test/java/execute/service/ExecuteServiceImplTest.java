@@ -3,9 +3,9 @@ package execute.service;
 import edu.fudan.common.util.Response;
 import edu.fudan.common.entity.Order;
 import execute.serivce.ExecuteServiceImpl;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -25,7 +25,7 @@ public class ExecuteServiceImplTest {
     private HttpHeaders headers = new HttpHeaders();
     private HttpEntity requestEntity = new HttpEntity(headers);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -38,7 +38,10 @@ public class ExecuteServiceImplTest {
         Response<Order> response = new Response<>(1, null, order);
         ResponseEntity<Response<Order>> re = new ResponseEntity<>(response, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-order-service:12031/api/v1/orderservice/order/" + "order_id",
+                """
+                http://ts-order-service:12031/api/v1/orderservice/order/\
+                order_id\
+                """,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<Response<Order>>() {
@@ -52,7 +55,7 @@ public class ExecuteServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re2);
         Response result = executeServiceImpl.ticketExecute("order_id", headers);
-        Assert.assertEquals(new Response<>(1, "Success.", null), result);
+        Assertions.assertEquals(new Response<>(1, "Success.", null), result);
     }
 
     @Test
@@ -61,7 +64,10 @@ public class ExecuteServiceImplTest {
         Response<Order> response = new Response<>(0, null, null);
         ResponseEntity<Response<Order>> re = new ResponseEntity<>(response, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-order-service:12031/api/v1/orderservice/order/" + "order_id",
+                """
+                http://ts-order-service:12031/api/v1/orderservice/order/\
+                order_id\
+                """,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<Response<Order>>() {
@@ -72,7 +78,10 @@ public class ExecuteServiceImplTest {
         Response<Order> response2 = new Response<>(1, null, order);
         ResponseEntity<Response<Order>> re2 = new ResponseEntity<>(response2, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/" + "order_id",
+                """
+                http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/\
+                order_id\
+                """,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<Response<Order>>() {
@@ -86,7 +95,7 @@ public class ExecuteServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re3);
         Response result = executeServiceImpl.ticketExecute("order_id", headers);
-        Assert.assertEquals(new Response<>(1, "Success", null), result);
+        Assertions.assertEquals(new Response<>(1, "Success", null), result);
     }
 
     @Test
@@ -97,7 +106,10 @@ public class ExecuteServiceImplTest {
         Response<Order> response = new Response<>(1, null, order);
         ResponseEntity<Response<Order>> re = new ResponseEntity<>(response, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-order-service:12031/api/v1/orderservice/order/" + "order_id",
+                """
+                http://ts-order-service:12031/api/v1/orderservice/order/\
+                order_id\
+                """,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<Response<Order>>() {
@@ -111,7 +123,7 @@ public class ExecuteServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re2);
         Response result = executeServiceImpl.ticketCollect("order_id", headers);
-        Assert.assertEquals(new Response<>(1, "Success", null), result);
+        Assertions.assertEquals(new Response<>(1, "Success", null), result);
     }
 
     @Test
@@ -120,7 +132,10 @@ public class ExecuteServiceImplTest {
         Response<Order> response = new Response<>(0, null, null);
         ResponseEntity<Response<Order>> re = new ResponseEntity<>(response, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-order-service:12031/api/v1/orderservice/order/" + "order_id",
+                """
+                http://ts-order-service:12031/api/v1/orderservice/order/\
+                order_id\
+                """,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<Response<Order>>() {
@@ -131,7 +146,10 @@ public class ExecuteServiceImplTest {
         Response<Order> response2 = new Response<>(1, null, order);
         ResponseEntity<Response<Order>> re2 = new ResponseEntity<>(response2, HttpStatus.OK);
         Mockito.when(restTemplate.exchange(
-                "http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/" + "order_id",
+                """
+                http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/\
+                order_id\
+                """,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<Response<Order>>() {
@@ -145,7 +163,7 @@ public class ExecuteServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re3);
         Response result = executeServiceImpl.ticketCollect("order_id", headers);
-        Assert.assertEquals(new Response<>(1, "Success.", null), result);
+        Assertions.assertEquals(new Response<>(1, "Success.", null), result);
     }
 
 }

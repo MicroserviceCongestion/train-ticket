@@ -23,7 +23,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.MessageFormat;
@@ -62,7 +62,7 @@ public class TokenServiceImpl implements TokenService {
         String verifyCode = dto.getVerificationCode();
 //        LOGGER.info("LOGIN USER :" + username + " __ " + password + " __ " + verifyCode);
         String verification_code_service_url = getServiceUrl("ts-verification-code-service");
-        if (!StringUtils.isEmpty(verifyCode)) {
+        if (!ObjectUtils.isEmpty(verifyCode)) {
             HttpEntity requestEntity = new HttpEntity(headers);
             ResponseEntity<Boolean> re = restTemplate.exchange(
                      verification_code_service_url + "/api/v1/verifycode/verify/" + verifyCode,

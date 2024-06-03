@@ -3,11 +3,9 @@ package consignprice.service;
 import consignprice.entity.ConsignPrice;
 import consignprice.repository.ConsignPriceConfigRepository;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -16,7 +14,6 @@ import org.springframework.http.HttpHeaders;
 
 import java.util.UUID;
 
-@RunWith(JUnit4.class)
 public class ConsignPriceServiceImplTest {
 
     @InjectMocks
@@ -27,7 +24,7 @@ public class ConsignPriceServiceImplTest {
 
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -37,7 +34,7 @@ public class ConsignPriceServiceImplTest {
         ConsignPrice priceConfig = new ConsignPrice(UUID.randomUUID().toString(), 1, 2.0, 3.0, 3.5, 4.0);
         Mockito.when(repository.findByIndex(0)).thenReturn(priceConfig);
         Response result = consignPriceServiceImpl.getPriceByWeightAndRegion(1.0, true, headers);
-        Assert.assertEquals(new Response<>(1, "Success", 3.0), result);
+        Assertions.assertEquals(new Response<>(1, "Success", 3.0), result);
     }
 
     @Test
@@ -45,7 +42,7 @@ public class ConsignPriceServiceImplTest {
         ConsignPrice priceConfig = new ConsignPrice(UUID.randomUUID().toString(), 1, 2.0, 3.0, 3.5, 4.0);
         Mockito.when(repository.findByIndex(0)).thenReturn(priceConfig);
         Response result = consignPriceServiceImpl.getPriceByWeightAndRegion(3.0, true, headers);
-        Assert.assertEquals(new Response<>(1, "Success", 6.5), result);
+        Assertions.assertEquals(new Response<>(1, "Success", 6.5), result);
     }
 
     @Test
@@ -53,7 +50,7 @@ public class ConsignPriceServiceImplTest {
         ConsignPrice priceConfig = new ConsignPrice(UUID.randomUUID().toString(), 1, 2.0, 3.0, 3.5, 4.0);
         Mockito.when(repository.findByIndex(0)).thenReturn(priceConfig);
         Response result = consignPriceServiceImpl.getPriceByWeightAndRegion(3.0, false, headers);
-        Assert.assertEquals(new Response<>(1, "Success", 7.0), result);
+        Assertions.assertEquals(new Response<>(1, "Success", 7.0), result);
     }
 
     @Test
@@ -62,7 +59,7 @@ public class ConsignPriceServiceImplTest {
         Mockito.when(repository.findByIndex(0)).thenReturn(priceConfig);
         Response result = consignPriceServiceImpl.queryPriceInformation(headers);
         String str = "The price of weight within 2.0 is 3.0. The price of extra weight within the region is 3.5 and beyond the region is 4.0\n";
-        Assert.assertEquals(new Response<>(1, "Success", str), result);
+        Assertions.assertEquals(new Response<>(1, "Success", str), result);
     }
 
     @Test
@@ -71,7 +68,7 @@ public class ConsignPriceServiceImplTest {
         Mockito.when(repository.findByIndex(0)).thenReturn(config);
         Mockito.when(repository.save(Mockito.any(ConsignPrice.class))).thenReturn(null);
         Response result = consignPriceServiceImpl.createAndModifyPrice(config, headers);
-        Assert.assertEquals(new Response<>(1, "Success", config), result);
+        Assertions.assertEquals(new Response<>(1, "Success", config), result);
     }
 
     @Test
@@ -80,7 +77,7 @@ public class ConsignPriceServiceImplTest {
         Mockito.when(repository.findByIndex(0)).thenReturn(null);
         Mockito.when(repository.save(Mockito.any(ConsignPrice.class))).thenReturn(null);
         Response result = consignPriceServiceImpl.createAndModifyPrice(config, headers);
-        Assert.assertEquals(new Response<>(1, "Success", config), result);
+        Assertions.assertEquals(new Response<>(1, "Success", config), result);
     }
 
     @Test
@@ -88,7 +85,7 @@ public class ConsignPriceServiceImplTest {
         ConsignPrice config = new ConsignPrice();
         Mockito.when(repository.findByIndex(0)).thenReturn(config);
         Response result = consignPriceServiceImpl.getPriceConfig(headers);
-        Assert.assertEquals(new Response<>(1, "Success", config), result);
+        Assertions.assertEquals(new Response<>(1, "Success", config), result);
     }
 
 }

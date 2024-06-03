@@ -1,11 +1,9 @@
 package seat.service;
 
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -17,7 +15,6 @@ import edu.fudan.common.entity.*;
 
 import java.util.ArrayList;
 
-@RunWith(JUnit4.class)
 public class SeatServiceImplTest {
 
     @InjectMocks
@@ -28,7 +25,7 @@ public class SeatServiceImplTest {
 
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -60,7 +57,7 @@ public class SeatServiceImplTest {
                 Mockito.any(ParameterizedTypeReference.class)))
                 .thenReturn(re1).thenReturn(re2).thenReturn(re3);
         Response result = seatServiceImpl.distributeSeat(seat, headers);
-        Assert.assertEquals("Use a new seat number!", result.getMsg());
+        Assertions.assertEquals("Use a new seat number!", result.getMsg());
     }
 
     @Test
@@ -90,7 +87,7 @@ public class SeatServiceImplTest {
                 Mockito.any(ParameterizedTypeReference.class)))
                 .thenReturn(re1).thenReturn(re2).thenReturn(re3);
         Response result = seatServiceImpl.distributeSeat(seat, headers);
-        Assert.assertEquals("Use a new seat number!", result.getMsg());
+        Assertions.assertEquals("Use a new seat number!", result.getMsg());
     }
 
     @Test
@@ -125,7 +122,7 @@ public class SeatServiceImplTest {
                 Mockito.any(ParameterizedTypeReference.class)))
                 .thenReturn(re1).thenReturn(re2).thenReturn(re3).thenReturn(re4);
         Response result = seatServiceImpl.getLeftTicketOfInterval(seat, headers);
-        Assert.assertEquals(new Response<>(1, "Get Left Ticket of Internal Success", 1), result);
+        Assertions.assertEquals(new Response<>(1, "Get Left Ticket of Internal Success", 1), result);
     }
 
     @Test
@@ -160,7 +157,7 @@ public class SeatServiceImplTest {
                 Mockito.any(ParameterizedTypeReference.class)))
                 .thenReturn(re1).thenReturn(re2).thenReturn(re3).thenReturn(re4);
         Response result = seatServiceImpl.getLeftTicketOfInterval(seat, headers);
-        Assert.assertEquals(new Response<>(1, "Get Left Ticket of Internal Success", 1), result);
+        Assertions.assertEquals(new Response<>(1, "Get Left Ticket of Internal Success", 1), result);
     }
 
 }

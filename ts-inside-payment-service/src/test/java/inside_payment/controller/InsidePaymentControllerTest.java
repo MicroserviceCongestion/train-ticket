@@ -5,11 +5,9 @@ import edu.fudan.common.util.Response;
 import inside_payment.entity.AccountInfo;
 import inside_payment.entity.PaymentInfo;
 import inside_payment.service.InsidePaymentService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -20,7 +18,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@RunWith(JUnit4.class)
 public class InsidePaymentControllerTest {
 
     @InjectMocks
@@ -31,7 +28,7 @@ public class InsidePaymentControllerTest {
     private MockMvc mockMvc;
     private Response response = new Response();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(insidePaymentController).build();
@@ -52,7 +49,7 @@ public class InsidePaymentControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/inside_pay_service/inside_payment").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -63,7 +60,7 @@ public class InsidePaymentControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/inside_pay_service/inside_payment/account").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -72,7 +69,7 @@ public class InsidePaymentControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/inside_pay_service/inside_payment/user_id/money"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -81,7 +78,7 @@ public class InsidePaymentControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/inside_pay_service/inside_payment/payment"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -90,7 +87,7 @@ public class InsidePaymentControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/inside_pay_service/inside_payment/account"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -99,7 +96,7 @@ public class InsidePaymentControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/inside_pay_service/inside_payment/drawback/user_id/money"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -110,7 +107,7 @@ public class InsidePaymentControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/inside_pay_service/inside_payment/difference").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -119,7 +116,7 @@ public class InsidePaymentControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/inside_pay_service/inside_payment/money"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
 }

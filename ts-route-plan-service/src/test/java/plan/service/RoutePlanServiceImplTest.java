@@ -3,11 +3,9 @@ package plan.service;
 import edu.fudan.common.entity.Trip;
 import edu.fudan.common.entity.TripResponse;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -21,7 +19,6 @@ import edu.fudan.common.entity.Route;
 import java.util.ArrayList;
 import java.util.Date;
 
-@RunWith(JUnit4.class)
 public class RoutePlanServiceImplTest {
 
     @InjectMocks
@@ -32,7 +29,7 @@ public class RoutePlanServiceImplTest {
 
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -51,7 +48,7 @@ public class RoutePlanServiceImplTest {
                 Mockito.any(ParameterizedTypeReference.class)))
                 .thenReturn(re1);
         Response result = routePlanServiceImpl.searchCheapestResult(info, headers);
-        Assert.assertEquals(new Response<>(1, "Success", new ArrayList<>()), result);
+        Assertions.assertEquals(new Response<>(1, "Success", new ArrayList<>()), result);
     }
 
     @Test
@@ -68,7 +65,7 @@ public class RoutePlanServiceImplTest {
                 Mockito.any(ParameterizedTypeReference.class)))
                 .thenReturn(re1);
         Response result = routePlanServiceImpl.searchQuickestResult(info, headers);
-        Assert.assertEquals(new Response<>(1, "Success", new ArrayList<>()), result);
+        Assertions.assertEquals(new Response<>(1, "Success", new ArrayList<>()), result);
     }
 
     @Test
@@ -92,7 +89,7 @@ public class RoutePlanServiceImplTest {
                 Mockito.any(ParameterizedTypeReference.class)))
                 .thenReturn(re).thenReturn(re).thenReturn(re2).thenReturn(re3).thenReturn(re3);
         Response result = routePlanServiceImpl.searchMinStopStations(info, headers);
-        Assert.assertEquals("Success.", result.getMsg());
+        Assertions.assertEquals("Success.", result.getMsg());
     }
 
 }

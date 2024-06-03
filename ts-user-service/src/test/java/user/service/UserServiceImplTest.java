@@ -1,11 +1,9 @@
 package user.service;
 
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -23,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@RunWith(JUnit4.class)
 public class UserServiceImplTest {
 
     @InjectMocks
@@ -37,7 +34,7 @@ public class UserServiceImplTest {
 
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -60,7 +57,7 @@ public class UserServiceImplTest {
         User user = new User();
         Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(user);
         Response result = userServiceImpl.saveUser(userDto, headers);
-        Assert.assertEquals(new Response<>(1, "REGISTER USER SUCCESS", user), result);
+        Assertions.assertEquals(new Response<>(1, "REGISTER USER SUCCESS", user), result);
     }
 
     @Test
@@ -69,14 +66,14 @@ public class UserServiceImplTest {
         users.add(new User());
         Mockito.when(userRepository.findAll()).thenReturn(users);
         Response result = userServiceImpl.getAllUsers(headers);
-        Assert.assertEquals(new Response<>(1, "Success", users), result);
+        Assertions.assertEquals(new Response<>(1, "Success", users), result);
     }
 
     @Test
     public void testGetAllUsers2() {
         Mockito.when(userRepository.findAll()).thenReturn(null);
         Response result = userServiceImpl.getAllUsers(headers);
-        Assert.assertEquals(new Response<>(0, "NO User", null), result);
+        Assertions.assertEquals(new Response<>(0, "NO User", null), result);
     }
 
     @Test
@@ -84,14 +81,14 @@ public class UserServiceImplTest {
         User user = new User();
         Mockito.when(userRepository.findByUserName(Mockito.anyString())).thenReturn(user);
         Response result = userServiceImpl.findByUserName("user_name", headers);
-        Assert.assertEquals(new Response<>(1, "Find User Success", user), result);
+        Assertions.assertEquals(new Response<>(1, "Find User Success", user), result);
     }
 
     @Test
     public void testFindByUserName2() {
         Mockito.when(userRepository.findByUserName(Mockito.anyString())).thenReturn(null);
         Response result = userServiceImpl.findByUserName("user_name", headers);
-        Assert.assertEquals(new Response<>(0, "No User", null), result);
+        Assertions.assertEquals(new Response<>(0, "No User", null), result);
     }
 
     @Test
@@ -100,7 +97,7 @@ public class UserServiceImplTest {
         User user = new User();
         Mockito.when(userRepository.findByUserId(Mockito.any(UUID.class).toString())).thenReturn(user);
         Response result = userServiceImpl.findByUserId(userId.toString(), headers);
-        Assert.assertEquals(new Response<>(1, "Find User Success", user), result);
+        Assertions.assertEquals(new Response<>(1, "Find User Success", user), result);
     }
 
     @Test
@@ -108,7 +105,7 @@ public class UserServiceImplTest {
         UUID userId = UUID.randomUUID();
         Mockito.when(userRepository.findByUserId(Mockito.any(UUID.class).toString())).thenReturn(null);
         Response result = userServiceImpl.findByUserId(userId.toString(), headers);
-        Assert.assertEquals(new Response<>(0, "No User", null), result);
+        Assertions.assertEquals(new Response<>(0, "No User", null), result);
     }
 
     @Test
@@ -123,7 +120,7 @@ public class UserServiceImplTest {
                 Response.class)).thenReturn(null);
         Mockito.doNothing().doThrow(new RuntimeException()).when(userRepository).deleteByUserId(Mockito.any(UUID.class).toString());
         Response result = userServiceImpl.deleteUser(userId, headers);
-        Assert.assertEquals(new Response<>(1, "DELETE SUCCESS", null), result);
+        Assertions.assertEquals(new Response<>(1, "DELETE SUCCESS", null), result);
     }
 
     @Test
@@ -131,7 +128,7 @@ public class UserServiceImplTest {
         UUID userId = UUID.randomUUID();
         Mockito.when(userRepository.findByUserId(Mockito.any(UUID.class).toString())).thenReturn(null);
         Response result = userServiceImpl.deleteUser(userId.toString(), headers);
-        Assert.assertEquals(new Response<>(0, "USER NOT EXISTS", null), result);
+        Assertions.assertEquals(new Response<>(0, "USER NOT EXISTS", null), result);
     }
 
     @Test
@@ -142,7 +139,7 @@ public class UserServiceImplTest {
         Mockito.doNothing().doThrow(new RuntimeException()).when(userRepository).deleteByUserId(Mockito.any(UUID.class).toString());
         Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(null);
         Response result = userServiceImpl.updateUser(userDto, headers);
-        Assert.assertEquals("SAVE USER SUCCESS", result.getMsg());
+        Assertions.assertEquals("SAVE USER SUCCESS", result.getMsg());
     }
 
     @Test
@@ -150,7 +147,7 @@ public class UserServiceImplTest {
         UserDto userDto = new UserDto();
         Mockito.when(userRepository.findByUserName(Mockito.anyString())).thenReturn(null);
         Response result = userServiceImpl.updateUser(userDto, headers);
-        Assert.assertEquals(new Response(0, "USER NOT EXISTS", null), result);
+        Assertions.assertEquals(new Response(0, "USER NOT EXISTS", null), result);
     }
 
     @Test

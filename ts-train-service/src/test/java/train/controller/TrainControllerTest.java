@@ -2,11 +2,9 @@ package train.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -22,7 +20,6 @@ import train.service.TrainService;
 import java.util.ArrayList;
 import java.util.List;
 
-@RunWith(JUnit4.class)
 public class TrainControllerTest {
 
     @InjectMocks
@@ -32,7 +29,7 @@ public class TrainControllerTest {
     private TrainService trainService;
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(trainController).build();
@@ -53,7 +50,7 @@ public class TrainControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/trainservice/trains").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(new Response(1, "create success", null), JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(new Response(1, "create success", null), JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -64,7 +61,7 @@ public class TrainControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/trainservice/trains").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals("train type already exist", JSONObject.parseObject(result, Response.class).getMsg());
+        Assertions.assertEquals("train type already exist", JSONObject.parseObject(result, Response.class).getMsg());
     }
 
     @Test
@@ -73,7 +70,7 @@ public class TrainControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/trainservice/trains/wrong_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(new Response(0, "here is no TrainType with the trainType id: wrong_id", null), JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(new Response(0, "here is no TrainType with the trainType id: wrong_id", null), JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -83,7 +80,7 @@ public class TrainControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/trainservice/trains/id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals("success", JSONObject.parseObject(result, Response.class).getMsg());
+        Assertions.assertEquals("success", JSONObject.parseObject(result, Response.class).getMsg());
     }
 
     @Test
@@ -94,7 +91,7 @@ public class TrainControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/trainservice/trains").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(new Response(1, "update success", true), JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(new Response(1, "update success", true), JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -105,7 +102,7 @@ public class TrainControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/trainservice/trains").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(new Response(0, "there is no trainType with the trainType id", false), JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(new Response(0, "there is no trainType with the trainType id", false), JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -114,7 +111,7 @@ public class TrainControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/trainservice/trains/id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(new Response(1, "delete success", true), JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(new Response(1, "delete success", true), JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -123,7 +120,7 @@ public class TrainControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/trainservice/trains/id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(new Response(0, "there is no train according to id", null), JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(new Response(0, "there is no train according to id", null), JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -134,7 +131,7 @@ public class TrainControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/trainservice/trains"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals("success", JSONObject.parseObject(result, Response.class).getMsg());
+        Assertions.assertEquals("success", JSONObject.parseObject(result, Response.class).getMsg());
     }
 
     @Test
@@ -144,7 +141,7 @@ public class TrainControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/trainservice/trains"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals("no content", JSONObject.parseObject(result, Response.class).getMsg());
+        Assertions.assertEquals("no content", JSONObject.parseObject(result, Response.class).getMsg());
     }
 
 }

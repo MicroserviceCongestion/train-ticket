@@ -40,7 +40,7 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public TrainType retrieve(String id, HttpHeaders headers) {
-        if (!repository.findById(id).isPresent()) {
+        if (repository.findById(id).isEmpty()) {
             TrainServiceImpl.LOGGER.error("[retrieve][Retrieve train error][Train not found][TrainTypeId: {}]",id);
             return null;
         } else {

@@ -6,8 +6,8 @@ import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.annotation.PostConstruct;
 
+import jakarta.annotation.PostConstruct;
 import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;

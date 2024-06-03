@@ -2,7 +2,6 @@
 
 package org.myproject.ms.monitoring.instrument.web.client;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.myproject.ms.monitoring.instrument.web.HSInject;
+import jakarta.annotation.PostConstruct;
 import org.myproject.ms.monitoring.Chainer;
 import org.myproject.ms.monitoring.instrument.web.HTKInject;
 import org.myproject.ms.monitoring.instrument.web.TWAConf;

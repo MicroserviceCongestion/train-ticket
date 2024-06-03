@@ -1,10 +1,8 @@
 package train.service;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -13,7 +11,6 @@ import org.springframework.http.HttpHeaders;
 import train.entity.TrainType;
 import train.repository.TrainTypeRepository;
 
-@RunWith(JUnit4.class)
 public class TrainServiceImplTest {
 
     @InjectMocks
@@ -24,7 +21,7 @@ public class TrainServiceImplTest {
 
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -35,7 +32,7 @@ public class TrainServiceImplTest {
         Mockito.when(repository.findById(Mockito.anyString())).thenReturn(null);
         Mockito.when(repository.save(Mockito.any(TrainType.class))).thenReturn(null);
         boolean result = trainServiceImpl.create(trainType, headers);
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -43,14 +40,14 @@ public class TrainServiceImplTest {
         TrainType trainType = new TrainType();
         Mockito.when(repository.findById(Mockito.anyString()).get()).thenReturn(trainType);
         boolean result = trainServiceImpl.create(trainType, headers);
-        Assert.assertFalse(result);
+        Assertions.assertFalse(result);
     }
 
     @Test
     public void testRetrieve1() {
         Mockito.when(repository.findById(Mockito.anyString())).thenReturn(null);
         TrainType result = trainServiceImpl.retrieve("id", headers);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
@@ -58,7 +55,7 @@ public class TrainServiceImplTest {
         TrainType trainType = new TrainType();
         Mockito.when(repository.findById(Mockito.anyString()).get()).thenReturn(trainType);
         TrainType result = trainServiceImpl.retrieve("id", headers);
-        Assert.assertNotNull(result);
+        Assertions.assertNotNull(result);
     }
 
     @Test
@@ -67,7 +64,7 @@ public class TrainServiceImplTest {
         Mockito.when(repository.findById(Mockito.anyString()).get()).thenReturn(trainType);
         Mockito.when(repository.save(Mockito.any(TrainType.class))).thenReturn(null);
         boolean result = trainServiceImpl.update(trainType, headers);
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -75,7 +72,7 @@ public class TrainServiceImplTest {
         TrainType trainType = new TrainType();
         Mockito.when(repository.findById(Mockito.anyString())).thenReturn(null);
         boolean result = trainServiceImpl.update(trainType, headers);
-        Assert.assertFalse(result);
+        Assertions.assertFalse(result);
     }
 
     @Test
@@ -84,20 +81,20 @@ public class TrainServiceImplTest {
         Mockito.when(repository.findById(Mockito.anyString()).get()).thenReturn(trainType);
         Mockito.doNothing().doThrow(new RuntimeException()).when(repository).deleteById(Mockito.anyString());
         boolean result = trainServiceImpl.delete("id", headers);
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
     public void testDelete2() {
         Mockito.when(repository.findById(Mockito.anyString())).thenReturn(null);
         boolean result = trainServiceImpl.delete("id", headers);
-        Assert.assertFalse(result);
+        Assertions.assertFalse(result);
     }
 
     @Test
     public void testQuery() {
         Mockito.when(repository.findAll()).thenReturn(null);
-        Assert.assertNull(trainServiceImpl.query(headers));
+        Assertions.assertNull(trainServiceImpl.query(headers));
     }
 
 }

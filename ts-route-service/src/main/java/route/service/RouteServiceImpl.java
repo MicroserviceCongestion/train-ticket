@@ -69,7 +69,7 @@ public class RouteServiceImpl implements RouteService {
     public Response deleteRoute(String routeId, HttpHeaders headers) {
         routeRepository.removeRouteById(routeId);
         Optional<Route> route = routeRepository.findById(routeId);
-        if (!route.isPresent()) {
+        if (route.isEmpty()) {
             return new Response<>(1, "Delete Success", routeId);
         } else {
             RouteServiceImpl.LOGGER.error("[deleteRoute][Delete error][Route not found][RouteId: {}]",routeId);
@@ -80,7 +80,7 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public Response getRouteById(String routeId, HttpHeaders headers) {
         Optional<Route> route = routeRepository.findById(routeId);
-        if (!route.isPresent()) {
+        if (route.isEmpty()) {
             RouteServiceImpl.LOGGER.error("[getRouteById][Find route error][Route not found][RouteId: {}]",routeId);
             return new Response<>(0, "No content with the routeId", null);
         } else {

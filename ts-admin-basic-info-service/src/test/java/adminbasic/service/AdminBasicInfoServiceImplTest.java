@@ -6,16 +6,13 @@ import edu.fudan.common.entity.Contacts;
 import edu.fudan.common.entity.Station;
 import edu.fudan.common.entity.TrainType;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-@RunWith(JUnit4.class)
 public class AdminBasicInfoServiceImplTest {
 
     @InjectMocks
@@ -29,7 +26,7 @@ public class AdminBasicInfoServiceImplTest {
     private Response response = new Response();
     private ResponseEntity<Response> re = new ResponseEntity<>(response, HttpStatus.OK);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -42,18 +39,21 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.getAllContacts(headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
     public void testDeleteContact() {
         Mockito.when(restTemplate.exchange(
-                "http://ts-contacts-service:12347/api/v1/contactservice/contacts/" + "contactsId",
+                """
+                http://ts-contacts-service:12347/api/v1/contactservice/contacts/\
+                contactsId\
+                """,
                 HttpMethod.DELETE,
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.deleteContact("contactsId", headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.modifyContact(mci, headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.addContact(c, headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.getAllStations(headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -103,7 +103,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.addStation(s, headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.deleteStation(s.getId(), headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.modifyStation(s, headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -140,7 +140,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.getAllTrains(headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -153,18 +153,21 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.addTrain(t, headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
     public void testDeleteTrain() {
         Mockito.when(restTemplate.exchange(
-                "http://ts-train-service:14567/api/v1/trainservice/trains/" + "id",
+                """
+                http://ts-train-service:14567/api/v1/trainservice/trains/\
+                id\
+                """,
                 HttpMethod.DELETE,
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.deleteTrain("id", headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -177,7 +180,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.modifyTrain(t, headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -188,7 +191,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.getAllConfigs(headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -201,18 +204,21 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.addConfig(c, headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
     public void testDeleteConfig() {
         Mockito.when(restTemplate.exchange(
-                "http://ts-config-service:15679/api/v1/configservice/configs/" + "name",
+                """
+                http://ts-config-service:15679/api/v1/configservice/configs/\
+                name\
+                """,
                 HttpMethod.DELETE,
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.deleteConfig("name", headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -225,7 +231,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.modifyConfig(c, headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -236,7 +242,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.getAllPrices(headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -249,7 +255,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.addPrice(pi, headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -262,7 +268,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.deletePrice(pi.getId(), headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
     @Test
@@ -275,7 +281,7 @@ public class AdminBasicInfoServiceImplTest {
                 requestEntity,
                 Response.class)).thenReturn(re);
         response = adminBasicInfoService.modifyPrice(pi, headers);
-        Assert.assertEquals(new Response<>(null, null, null), response);
+        Assertions.assertEquals(new Response<>(null, null, null), response);
     }
 
 }

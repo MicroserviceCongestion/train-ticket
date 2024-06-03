@@ -3,11 +3,9 @@ package other.controller;
 import com.alibaba.fastjson.JSONObject;
 import edu.fudan.common.entity.Seat;
 import edu.fudan.common.util.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -23,7 +21,6 @@ import other.service.OrderOtherService;
 
 import java.util.Date;
 
-@RunWith(JUnit4.class)
 public class OrderOtherControllerTest {
 
     @InjectMocks
@@ -34,7 +31,7 @@ public class OrderOtherControllerTest {
     private MockMvc mockMvc;
     private Response response = new Response();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(orderOtherController).build();
@@ -55,7 +52,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/orderOtherService/orderOther/tickets").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -66,7 +63,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/orderOtherService/orderOther").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -77,7 +74,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/orderOtherService/orderOther/admin").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -88,7 +85,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/orderOtherService/orderOther/query").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -99,7 +96,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/orderOtherService/orderOther/refresh").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -109,7 +106,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/orderOtherService/orderOther/" + travelDate.toString() + "/train_number"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -118,7 +115,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/orderOtherService/orderOther/price/order_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -127,7 +124,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/orderOtherService/orderOther/orderPay/order_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -136,7 +133,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/orderOtherService/orderOther/order_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -145,7 +142,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/orderOtherService/orderOther/status/order_id/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -155,7 +152,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/orderOtherService/orderOther/security/" + checkDate.toString() + "/account_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -166,7 +163,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/orderOtherService/orderOther").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -177,7 +174,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/orderOtherService/orderOther/admin").contentType(MediaType.APPLICATION_JSON).content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -186,7 +183,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/orderOtherService/orderOther/order_id"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
     @Test
@@ -195,7 +192,7 @@ public class OrderOtherControllerTest {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/orderOtherService/orderOther"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        Assert.assertEquals(response, JSONObject.parseObject(result, Response.class));
+        Assertions.assertEquals(response, JSONObject.parseObject(result, Response.class));
     }
 
 }

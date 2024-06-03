@@ -2,18 +2,15 @@ package notification.service;
 
 import notification.entity.Mail;
 import notification.entity.NotifyInfo;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpHeaders;
 
-@RunWith(JUnit4.class)
 public class NotificationServiceImplTest {
 
     @InjectMocks
@@ -24,7 +21,7 @@ public class NotificationServiceImplTest {
 
     private HttpHeaders headers = new HttpHeaders();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -34,7 +31,7 @@ public class NotificationServiceImplTest {
         NotifyInfo info = new NotifyInfo();
         Mockito.doNothing().doThrow(new RuntimeException()).when(mailService).sendEmail(Mockito.any(Mail.class), Mockito.anyString());
         boolean result = notificationServiceImpl.preserveSuccess(info, headers);
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -42,7 +39,7 @@ public class NotificationServiceImplTest {
         NotifyInfo info = new NotifyInfo();
         Mockito.doThrow(new Exception()).when(mailService).sendEmail(Mockito.any(Mail.class), Mockito.anyString());
         boolean result = notificationServiceImpl.preserveSuccess(info, headers);
-        Assert.assertFalse(result);
+        Assertions.assertFalse(result);
     }
 
     @Test
@@ -50,7 +47,7 @@ public class NotificationServiceImplTest {
         NotifyInfo info = new NotifyInfo();
         Mockito.doNothing().doThrow(new RuntimeException()).when(mailService).sendEmail(Mockito.any(Mail.class), Mockito.anyString());
         boolean result = notificationServiceImpl.orderCreateSuccess(info, headers);
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -58,7 +55,7 @@ public class NotificationServiceImplTest {
         NotifyInfo info = new NotifyInfo();
         Mockito.doThrow(new Exception()).when(mailService).sendEmail(Mockito.any(Mail.class), Mockito.anyString());
         boolean result = notificationServiceImpl.orderCreateSuccess(info, headers);
-        Assert.assertFalse(result);
+        Assertions.assertFalse(result);
     }
 
     @Test
@@ -66,7 +63,7 @@ public class NotificationServiceImplTest {
         NotifyInfo info = new NotifyInfo();
         Mockito.doNothing().doThrow(new RuntimeException()).when(mailService).sendEmail(Mockito.any(Mail.class), Mockito.anyString());
         boolean result = notificationServiceImpl.orderChangedSuccess(info, headers);
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -74,7 +71,7 @@ public class NotificationServiceImplTest {
         NotifyInfo info = new NotifyInfo();
         Mockito.doThrow(new Exception()).when(mailService).sendEmail(Mockito.any(Mail.class), Mockito.anyString());
         boolean result = notificationServiceImpl.orderChangedSuccess(info, headers);
-        Assert.assertFalse(result);
+        Assertions.assertFalse(result);
     }
 
     @Test
@@ -82,7 +79,7 @@ public class NotificationServiceImplTest {
         NotifyInfo info = new NotifyInfo();
         Mockito.doNothing().doThrow(new RuntimeException()).when(mailService).sendEmail(Mockito.any(Mail.class), Mockito.anyString());
         boolean result = notificationServiceImpl.orderCancelSuccess(info, headers);
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -90,7 +87,7 @@ public class NotificationServiceImplTest {
         NotifyInfo info = new NotifyInfo();
         Mockito.doThrow(new Exception()).when(mailService).sendEmail(Mockito.any(Mail.class), Mockito.anyString());
         boolean result = notificationServiceImpl.orderCancelSuccess(info, headers);
-        Assert.assertFalse(result);
+        Assertions.assertFalse(result);
     }
 
 }

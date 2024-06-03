@@ -2,11 +2,9 @@ package preserve.service;
 
 import edu.fudan.common.util.Response;
 import edu.fudan.common.util.StringUtils;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -20,7 +18,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
-@RunWith(JUnit4.class)
 public class PreserveServiceImplTest {
 
     @InjectMocks
@@ -32,7 +29,7 @@ public class PreserveServiceImplTest {
     private HttpHeaders headers = new HttpHeaders();
     private HttpEntity requestEntity = new HttpEntity(headers);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -132,7 +129,7 @@ public class PreserveServiceImplTest {
                 .thenReturn(re2).thenReturn(re3).thenReturn(re4).thenReturn(re4).thenReturn(re5).thenReturn(re6).thenReturn(re7).thenReturn(re9);
 
         Response result = preserveServiceImpl.preserve(oti, headers);
-        Assert.assertEquals(new Response<>(1, "Success.", null), result);
+        Assertions.assertEquals(new Response<>(1, "Success.", null), result);
     }
 
     @Test
@@ -149,7 +146,7 @@ public class PreserveServiceImplTest {
                 new ParameterizedTypeReference<Response<Ticket>>() {
                 })).thenReturn(reTicket);
         Ticket result = preserveServiceImpl.dipatchSeat(StringUtils.Date2String(new Date()), "G1234", "start_station", "dest_station", 2, 100, null, headers);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
     @Test
@@ -163,7 +160,7 @@ public class PreserveServiceImplTest {
                 requestEntitySendEmail,
                 Boolean.class)).thenReturn(reSendEmail);
         boolean result = preserveServiceImpl.sendEmail(notifyInfo, headers);
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -177,7 +174,7 @@ public class PreserveServiceImplTest {
                 new ParameterizedTypeReference<Response<User>>() {
                 })).thenReturn(re);
         User result = preserveServiceImpl.getAccount("1", headers);
-        Assert.assertNull(result);
+        Assertions.assertNull(result);
     }
 
 }

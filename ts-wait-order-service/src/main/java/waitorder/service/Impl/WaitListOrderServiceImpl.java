@@ -39,7 +39,7 @@ public class WaitListOrderServiceImpl implements WaitListOrderService {
     @Override
     public Response findOrderById(String id, HttpHeaders headers) {
         Optional<WaitListOrder> op = waitListOrderRepository.findById(id);
-        if(!op.isPresent()){
+        if(op.isEmpty()){
             LOGGER.warn("[findWaitOrderById][Find Order By Id Fail][No content][id: {}] ",id);
             return new Response<>(0, "No Content by this id", null);
         } else {
@@ -99,7 +99,7 @@ public class WaitListOrderServiceImpl implements WaitListOrderService {
     public Response updateOrder(WaitListOrder order, HttpHeaders headers) {
         LOGGER.info("[updateOrder][Update Wait List Order][Order Info:{}] ", order.toString());
         Optional<WaitListOrder> op = waitListOrderRepository.findById(order.getId());
-        if(!op.isPresent()){
+        if(op.isEmpty()){
             LOGGER.error("[updateOrder][Update Order Info Fail][Order not found][OrderId: {}]",order.getId());
             return new Response<>(0, "Order Not Found, Can't update", null);
         } else {
@@ -116,7 +116,7 @@ public class WaitListOrderServiceImpl implements WaitListOrderService {
     public Response modifyWaitListOrderStatus(int status, String orderId) {
         LOGGER.info("[modifyWaitListOrderStatus][Modify Order Status][OrderId:{}] ", orderId);
         Optional<WaitListOrder> op = waitListOrderRepository.findById(orderId);
-        if(!op.isPresent()){
+        if(op.isEmpty()){
             LOGGER.error("[modifyWaitListOrderStatus][Modify Order Status Fail][Order not found][OrderId: {}]",orderId);
             return new Response<>(0, "Order Not Found, Can't update", null);
         } else {

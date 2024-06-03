@@ -5,11 +5,9 @@ import edu.fudan.common.util.Response;
 import inside_payment.entity.*;
 import inside_payment.repository.AddMoneyRepository;
 import inside_payment.repository.PaymentRepository;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -23,7 +21,6 @@ import java.util.List;
 
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
-@RunWith(JUnit4.class)
 public class InsidePaymentServiceImplTest {
 
     @InjectMocks
@@ -41,7 +38,7 @@ public class InsidePaymentServiceImplTest {
     private HttpHeaders headers = new HttpHeaders();
     HttpEntity httpEntity = new HttpEntity(headers);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
@@ -78,7 +75,7 @@ public class InsidePaymentServiceImplTest {
                 Response.class)).thenReturn(re2);
         Mockito.when(paymentRepository.save(Mockito.any(Payment.class))).thenReturn(null);
         Response result = insidePaymentServiceImpl.pay(info, headers);
-        Assert.assertEquals(new Response<>(1, "Payment Success", null), result);
+        Assertions.assertEquals(new Response<>(1, "Payment Success", null), result);
     }
 
     @Test
@@ -88,7 +85,7 @@ public class InsidePaymentServiceImplTest {
         Mockito.when(addMoneyRepository.findByUserId(Mockito.anyString())).thenReturn(list);
         Mockito.when(addMoneyRepository.save(Mockito.any(Money.class))).thenReturn(null);
         Response result = insidePaymentServiceImpl.createAccount(info, headers);
-        Assert.assertEquals(new Response<>(1, "Create Account Success", null), result);
+        Assertions.assertEquals(new Response<>(1, "Create Account Success", null), result);
     }
 
     @Test
@@ -98,7 +95,7 @@ public class InsidePaymentServiceImplTest {
         list.add(new Money());
         Mockito.when(addMoneyRepository.findByUserId(Mockito.anyString())).thenReturn(list);
         Response result = insidePaymentServiceImpl.createAccount(info, headers);
-        Assert.assertEquals(new Response<>(0, "Create Account Failed, Account already Exists", null), result);
+        Assertions.assertEquals(new Response<>(0, "Create Account Failed, Account already Exists", null), result);
     }
 
     @Test
@@ -107,14 +104,14 @@ public class InsidePaymentServiceImplTest {
         Mockito.when(addMoneyRepository.findByUserId(Mockito.anyString())).thenReturn(list);
         Mockito.when(addMoneyRepository.save(Mockito.any(Money.class))).thenReturn(null);
         Response result = insidePaymentServiceImpl.addMoney("user_id", "money", headers);
-        Assert.assertEquals(new Response<>(1, "Add Money Success", null), result);
+        Assertions.assertEquals(new Response<>(1, "Add Money Success", null), result);
     }
 
     @Test
     public void testAddMoney2() {
         Mockito.when(addMoneyRepository.findByUserId(Mockito.anyString())).thenReturn(null);
         Response result = insidePaymentServiceImpl.addMoney("user_id", "money", headers);
-        Assert.assertEquals(new Response<>(0, "Add Money Failed", null), result);
+        Assertions.assertEquals(new Response<>(0, "Add Money Failed", null), result);
     }
 
     @Test
@@ -122,7 +119,7 @@ public class InsidePaymentServiceImplTest {
         List<Money> list = new ArrayList<>();
         Mockito.when(addMoneyRepository.findAll()).thenReturn(list);
         Response result = insidePaymentServiceImpl.queryAccount(headers);
-        Assert.assertEquals("Success", result.getMsg());
+        Assertions.assertEquals("Success", result.getMsg());
     }
 
     @Test
@@ -131,14 +128,14 @@ public class InsidePaymentServiceImplTest {
         payments.add(new Payment());
         Mockito.when(paymentRepository.findAll()).thenReturn(payments);
         Response result = insidePaymentServiceImpl.queryPayment(headers);
-        Assert.assertEquals(new Response<>(1, "Query Payment Success", payments), result);
+        Assertions.assertEquals(new Response<>(1, "Query Payment Success", payments), result);
     }
 
     @Test
     public void testQueryPayment2() {
         Mockito.when(paymentRepository.findAll()).thenReturn(null);
         Response result = insidePaymentServiceImpl.queryPayment(headers);
-        Assert.assertEquals(new Response<>(0, "Query Payment Failed", null), result);
+        Assertions.assertEquals(new Response<>(0, "Query Payment Failed", null), result);
     }
 
     @Test
@@ -147,14 +144,14 @@ public class InsidePaymentServiceImplTest {
         Mockito.when(addMoneyRepository.findByUserId(Mockito.anyString())).thenReturn(list);
         Mockito.when(addMoneyRepository.save(Mockito.any(Money.class))).thenReturn(null);
         Response result = insidePaymentServiceImpl.drawBack("user_id", "money", headers);
-        Assert.assertEquals(new Response<>(1, "Draw Back Money Success", null), result);
+        Assertions.assertEquals(new Response<>(1, "Draw Back Money Success", null), result);
     }
 
     @Test
     public void testDrawBack2() {
         Mockito.when(addMoneyRepository.findByUserId(Mockito.anyString())).thenReturn(null);
         Response result = insidePaymentServiceImpl.drawBack("user_id", "money", headers);
-        Assert.assertEquals(new Response<>(0, "Draw Back Money Failed", null), result);
+        Assertions.assertEquals(new Response<>(0, "Draw Back Money Failed", null), result);
     }
 
     @Test
@@ -169,7 +166,7 @@ public class InsidePaymentServiceImplTest {
         Mockito.when(addMoneyRepository.findByUserId(Mockito.anyString())).thenReturn(monies);
         Mockito.when(paymentRepository.save(Mockito.any(Payment.class))).thenReturn(null);
         Response result = insidePaymentServiceImpl.payDifference(info, headers);
-        Assert.assertEquals(new Response<>(1, "Pay Difference Success", null), result);
+        Assertions.assertEquals(new Response<>(1, "Pay Difference Success", null), result);
     }
 
     @Test
@@ -178,14 +175,14 @@ public class InsidePaymentServiceImplTest {
         monies.add(new Money());
         Mockito.when(addMoneyRepository.findAll()).thenReturn(monies);
         Response result = insidePaymentServiceImpl.queryAddMoney(headers);
-        Assert.assertEquals(new Response<>(1, "Query Money Success", null), result);
+        Assertions.assertEquals(new Response<>(1, "Query Money Success", null), result);
     }
 
     @Test
     public void testQueryAddMoney2() {
         Mockito.when(addMoneyRepository.findAll()).thenReturn(null);
         Response result = insidePaymentServiceImpl.queryAddMoney(headers);
-        Assert.assertEquals(new Response<>(0, "Query money failed", null), result);
+        Assertions.assertEquals(new Response<>(0, "Query money failed", null), result);
     }
 
     @Test
