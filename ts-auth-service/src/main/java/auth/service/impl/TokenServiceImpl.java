@@ -8,12 +8,11 @@ import auth.exception.UserOperationException;
 import auth.repository.UserRepository;
 import auth.security.jwt.JWTProvider;
 import auth.service.TokenService;
+import edu.fudan.common.PortMapping;
 import edu.fudan.common.util.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +26,6 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.MessageFormat;
-import java.util.List;
 
 /**
  * @author fdse
@@ -51,8 +49,13 @@ public class TokenServiceImpl implements TokenService {
     @Autowired
     private DiscoveryClient discoveryClient;
 
+
     private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
+        Integer port = PortMapping.getPort(serviceName);
+        if (port == null) {
+            throw new RuntimeException("Can not find service mapping: " + serviceName);
+        }
+        return "http://" + serviceName + ":" + port;
     }
 
     @Override

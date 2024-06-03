@@ -563,7 +563,7 @@ services:
 
   ts-delivery-service:
     build: ts-delivery-service
-    image: ${IMG_REPO}/ts-delivery-servicee:${IMG_TAG}
+    image: ${IMG_REPO}/ts-delivery-service:${IMG_TAG}
     restart: always
     ports:
       - 18808:18808
