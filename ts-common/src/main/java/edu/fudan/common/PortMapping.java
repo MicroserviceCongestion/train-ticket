@@ -54,4 +54,13 @@ public class PortMapping {
     public static Integer getPort(String serviceName) {
         return portMap.get(serviceName);
     }
+
+    public static String getServiceUrl(String serviceName) {
+        Integer port = PortMapping.getPort(serviceName);
+        if (port == null) {
+            throw new RuntimeException("Can not find service mapping: " + serviceName);
+        }
+        return "http://" + serviceName + ":" + port;
+    }
+
 }

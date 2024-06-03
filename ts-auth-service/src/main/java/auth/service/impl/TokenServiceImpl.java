@@ -13,7 +13,6 @@ import edu.fudan.common.util.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -46,17 +45,6 @@ public class TokenServiceImpl implements TokenService {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Autowired
-    private DiscoveryClient discoveryClient;
-
-
-    private String getServiceUrl(String serviceName) {
-        Integer port = PortMapping.getPort(serviceName);
-        if (port == null) {
-            throw new RuntimeException("Can not find service mapping: " + serviceName);
-        }
-        return "http://" + serviceName + ":" + port;
-    }
 
     @Override
     public Response getToken(BasicAuthDto dto, HttpHeaders headers) throws UserOperationException {
@@ -64,7 +52,7 @@ public class TokenServiceImpl implements TokenService {
         String password = dto.getPassword();
         String verifyCode = dto.getVerificationCode();
 //        LOGGER.info("LOGIN USER :" + username + " __ " + password + " __ " + verifyCode);
-        String verification_code_service_url = getServiceUrl("ts-verification-code-service");
+        String verification_code_service_url = PortMapping.getServiceUrl("ts-verification-code-service");
         if (!ObjectUtils.isEmpty(verifyCode)) {
             HttpEntity requestEntity = new HttpEntity(headers);
             ResponseEntity<Boolean> re = restTemplate.exchange(
