@@ -146,11 +146,6 @@ public class VerifyCodeServiceImplTest {
         }
 
         @Override
-        public boolean isRequestedSessionIdFromUrl() {
-            return false;
-        }
-
-        @Override
         public boolean authenticate(HttpServletResponse httpServletResponse) throws IOException, ServletException {
             return false;
         }
@@ -306,11 +301,6 @@ public class VerifyCodeServiceImplTest {
         }
 
         @Override
-        public String getRealPath(String s) {
-            return null;
-        }
-
-        @Override
         public int getRemotePort() {
             return 0;
         }
@@ -364,6 +354,21 @@ public class VerifyCodeServiceImplTest {
         public DispatcherType getDispatcherType() {
             return null;
         }
+
+        @Override
+        public String getRequestId() {
+            return "";
+        }
+
+        @Override
+        public String getProtocolRequestId() {
+            return "";
+        }
+
+        @Override
+        public ServletConnection getServletConnection() {
+            return null;
+        }
     };
     private HttpServletResponse response = new HttpServletResponse() {
         @Override
@@ -386,15 +391,6 @@ public class VerifyCodeServiceImplTest {
             return null;
         }
 
-        @Override
-        public String encodeUrl(String s) {
-            return null;
-        }
-
-        @Override
-        public String encodeRedirectUrl(String s) {
-            return null;
-        }
 
         @Override
         public void sendError(int i, String s) throws IOException {
@@ -443,11 +439,6 @@ public class VerifyCodeServiceImplTest {
 
         @Override
         public void setStatus(int i) {
-
-        }
-
-        @Override
-        public void setStatus(int i, String s) {
 
         }
 

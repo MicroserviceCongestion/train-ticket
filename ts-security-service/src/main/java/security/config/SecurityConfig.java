@@ -1,11 +1,13 @@
 package security.config;
 
 import edu.fudan.common.security.jwt.JWTFilter;
+import jakarta.annotation.Nonnull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.web.cors.CorsConfiguration.ALL;
@@ -46,9 +47,9 @@ public class SecurityConfig {
      */
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
+        return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings(@Nonnull CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(ALL)
                         .allowedMethods(ALL)
@@ -62,16 +63,16 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.httpBasic(basic -> basic
+        httpSecurity
                 // close default csrf
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 // close session
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests(requests -> requests
+                .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/v1/securityservice/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers("/swagger-ui.html", "/webjars/**", "/images/**", "/configuration/**", "/swagger-resources/**", "/v2/**").permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(new JWTFilter(), UsernamePasswordAuthenticationFilter.class));
+                .addFilterBefore(new JWTFilter(), UsernamePasswordAuthenticationFilter.class);
 
         // close cache
         httpSecurity.headers(withDefaults());

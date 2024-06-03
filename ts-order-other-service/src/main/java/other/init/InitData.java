@@ -1,8 +1,6 @@
 package other.init;
 
 import edu.fudan.common.entity.OrderStatus;
-import edu.fudan.common.util.StringUtils;
-import org.apache.tomcat.jni.Time;
 import other.entity.Order;
 import edu.fudan.common.entity.SeatClass;
 import other.service.OrderOtherService;
@@ -10,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * @author fdse
