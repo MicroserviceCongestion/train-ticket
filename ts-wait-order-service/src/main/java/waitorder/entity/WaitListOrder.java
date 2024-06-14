@@ -1,11 +1,14 @@
 package waitorder.entity;
 
 import edu.fudan.common.util.StringUtils;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import jakarta.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -58,33 +61,6 @@ public class WaitListOrder {
         waitUtilTime = StringUtils.Date2String(c.getTime());
         travelTime=StringUtils.Date2String(c.getTime());
         status= WaitListOrderStatus.NOTPAID.getCode();
-    }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        WaitListOrder that = (WaitListOrder) o;
-//        return contactsDocumentType == that.contactsDocumentType
-//                && coachNumber == that.coachNumber
-//                && seatClass == that.seatClass
-//                && id.equals(that.id)
-//                && Objects.equals(travelTime, that.travelTime)
-//                && Objects.equals(accountId, that.accountId)
-//                && Objects.equals(contactsName, that.contactsName)
-//                && Objects.equals(contactsDocumentNumber, that.contactsDocumentNumber)
-//                && Objects.equals(trainNumber, that.trainNumber)
-//                && Objects.equals(seatNumber, that.seatNumber)
-//                && Objects.equals(fromStation, that.fromStation)
-//                && Objects.equals(toStation, that.toStation)
-//                && Objects.equals(price, that.price);
-//    }
-
-    @Override
-    public int hashCode() {
-        int result = 17;
-        result = 31 * result + (id == null ? 0 : id.hashCode());
-        return result;
     }
 
     public Date getCreatedTime(){ return StringUtils.String2Date(createdTime); }
