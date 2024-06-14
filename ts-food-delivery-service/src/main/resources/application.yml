@@ -11,16 +11,12 @@ spring:
     name: ts-food-delivery-service
   datasource:
 #    url: jdbc:mysql://localhost:30001/ts-food-delivery-mysql?useSSL=false
-    url: jdbc:mysql://${FOOD_DELIVERY_MYSQL_HOST:ts-food-delivery-mysql}:${FOOD_DELIVERY_MYSQL_PORT:3306}/${FOOD_DELIVERY_MYSQL_DATABASE:ts-food-delivery-mysql}?useSSL=false
+    url: jdbc:mysql://${FOOD_DELIVERY_MYSQL_HOST:ts-food-delivery-mysql}:${FOOD_DELIVERY_MYSQL_PORT:3306}/${FOOD_DELIVERY_MYSQL_DATABASE:ts-food-delivery-mysql}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
     username: ${FOOD_DELIVERY_MYSQL_USER:root}
-    password: ${FOOD_DELIVERY_MYSQL_PASSWORD:root}
-    driver-class-name: com.mysql.jdbc.Driver
+    password: ${FOOD_DELIVERY_MYSQL_PASSWORD:Abcd1234#}
   jpa:
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
 
 swagger:
   controllerPackage: fooddelivery.controller
