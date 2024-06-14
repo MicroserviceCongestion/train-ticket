@@ -17,6 +17,13 @@ services:
     networks:
       - my-network
 
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - 5672:5672
+    networks:
+      - my-network
+
   ts-ui-dashboard:
     build: ts-ui-dashboard
     image: ${IMG_REPO}/ts-ui-dashboard:${IMG_TAG}
@@ -473,7 +480,6 @@ services:
       - 16101:16101
     depends_on:
       - ts-voucher-mysql
-      - nacos
     volumes:
       - /var/lib/mysql
     networks:
