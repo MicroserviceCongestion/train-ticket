@@ -1,17 +1,16 @@
 package order.service;
 
+import edu.fudan.common.PortMapping;
 import edu.fudan.common.entity.*;
 import edu.fudan.common.util.Response;
 import edu.fudan.common.util.StringUtils;
-import order.entity.OrderAlterInfo;
 import order.entity.Order;
+import order.entity.OrderAlterInfo;
 import order.entity.OrderInfo;
 import order.repository.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -39,9 +38,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private DiscoveryClient discoveryClient;
-
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName; }
 
 //    @Value("${station-service.url}")
 //    String station_service_url;
@@ -208,7 +204,7 @@ public class OrderServiceImpl implements OrderService {
     public List<String> queryForStationId(List<String> ids, HttpHeaders headers) {
 
         HttpEntity requestEntity = new HttpEntity(ids, null);
-        String station_service_url=getServiceUrl("ts-station-service");
+        String station_service_url = PortMapping.getServiceUrl("ts-station-service");
         ResponseEntity<Response<List<String>>> re = restTemplate.exchange(
                 station_service_url + "/api/v1/stationservice/stations/namelist",
                 HttpMethod.POST,

@@ -15,8 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-
 import java.util.List;
+
+import static edu.fudan.common.PortMapping.getServiceUrl;
 
 /**
  * @author fdse
@@ -33,9 +34,6 @@ public class AdminUserServiceImpl implements AdminUserService {
 //    String user_service_url;
 //    private final String USER_SERVICE_IP_URI = user_service_url + "/api/v1/userservice/users";
 
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     @Override
     public Response getAllUsers(HttpHeaders headers) {

@@ -1,10 +1,6 @@
 package cancel.service;
 
-import edu.fudan.common.entity.NotifyInfo;
-import edu.fudan.common.entity.OrderStatus;
-import edu.fudan.common.entity.Order;
-import edu.fudan.common.entity.SeatClass;
-import edu.fudan.common.entity.User;
+import edu.fudan.common.entity.*;
 import edu.fudan.common.util.Response;
 import edu.fudan.common.util.StringUtils;
 import org.slf4j.Logger;
@@ -23,6 +19,8 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import static edu.fudan.common.PortMapping.getServiceUrl;
+
 /**
  * @author fdse
  */
@@ -38,9 +36,6 @@ public class CancelServiceImpl implements CancelService {
 
     String orderStatusCancelNotPermitted = "Order Status Cancel Not Permitted";
 
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     @Override
     public Response cancelOrder(String orderId, String loginId, HttpHeaders headers) {

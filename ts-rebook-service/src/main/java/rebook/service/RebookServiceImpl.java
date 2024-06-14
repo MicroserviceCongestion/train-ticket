@@ -1,9 +1,6 @@
 package rebook.service;
 
-import edu.fudan.common.entity.Trip;
-import edu.fudan.common.entity.TripAllDetail;
-import edu.fudan.common.entity.TripAllDetailInfo;
-import edu.fudan.common.entity.TripResponse;
+import edu.fudan.common.entity.*;
 import edu.fudan.common.util.JsonUtils;
 import edu.fudan.common.util.Response;
 import edu.fudan.common.util.StringUtils;
@@ -18,13 +15,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import edu.fudan.common.entity.*;
-import rebook.entity.*;
+import rebook.entity.RebookInfo;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static edu.fudan.common.PortMapping.getServiceUrl;
 
 /**
  * @author fdse
@@ -38,10 +36,6 @@ public class RebookServiceImpl implements RebookService {
     private DiscoveryClient discoveryClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RebookServiceImpl.class);
-
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     @Override
     public Response rebook(RebookInfo info, HttpHeaders httpHeaders) {

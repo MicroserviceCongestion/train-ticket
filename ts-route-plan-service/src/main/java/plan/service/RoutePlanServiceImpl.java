@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static edu.fudan.common.PortMapping.getServiceUrl;
+
 /**
  * @author fdse
  */
@@ -30,10 +32,6 @@ public class RoutePlanServiceImpl implements RoutePlanService {
     @Autowired
     private DiscoveryClient discoveryClient;
     private static final Logger LOGGER = LoggerFactory.getLogger(RoutePlanServiceImpl.class);
-
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     @Override
     public Response searchCheapestResult(RoutePlanInfo info, HttpHeaders headers) {

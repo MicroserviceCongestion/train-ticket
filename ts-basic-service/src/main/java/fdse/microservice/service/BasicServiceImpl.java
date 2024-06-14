@@ -18,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
+import static edu.fudan.common.PortMapping.getServiceUrl;
+
 /**
  * @author fdse
  */
@@ -32,9 +34,6 @@ public class BasicServiceImpl implements BasicService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicServiceImpl.class);
 
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     @Override
     public Response queryForTravel(Travel info, HttpHeaders headers) {

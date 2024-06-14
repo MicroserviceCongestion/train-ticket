@@ -1,6 +1,6 @@
 package adminbasic.service;
 
-import adminbasic.entity.*;
+import adminbasic.entity.PriceInfo;
 import edu.fudan.common.entity.Config;
 import edu.fudan.common.entity.Contacts;
 import edu.fudan.common.entity.Station;
@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import static edu.fudan.common.PortMapping.getServiceUrl;
+
 
 /**
  * @author fdse
@@ -32,9 +34,6 @@ public class AdminBasicInfoServiceImpl implements AdminBasicInfoService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminBasicInfoServiceImpl.class);
 
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     @Override
     public Response getAllContacts(HttpHeaders headers) {

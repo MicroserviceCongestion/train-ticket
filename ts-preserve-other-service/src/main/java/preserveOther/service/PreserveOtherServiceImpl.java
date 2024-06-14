@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static edu.fudan.common.PortMapping.getServiceUrl;
+
 /**
  * @author fdse
  */
@@ -37,10 +39,6 @@ public class PreserveOtherServiceImpl implements PreserveOtherService {
     private DiscoveryClient discoveryClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PreserveOtherServiceImpl.class);
-
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     @Override
     public Response preserve(OrderTicketsInfo oti, HttpHeaders httpHeaders) {

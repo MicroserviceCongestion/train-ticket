@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static edu.fudan.common.PortMapping.getServiceUrl;
+
 /**
  * @author fdse
  */
@@ -28,9 +30,6 @@ public class AdminRouteServiceImpl implements AdminRouteService {
 
     public static final Logger logger = LoggerFactory.getLogger(AdminRouteServiceImpl.class);
 
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     @Override
     public Response getAllRoutes(HttpHeaders headers) {

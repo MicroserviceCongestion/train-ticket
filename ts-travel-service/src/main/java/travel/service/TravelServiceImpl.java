@@ -6,6 +6,7 @@ import edu.fudan.common.entity.*;
 import edu.fudan.common.util.JsonUtils;
 import edu.fudan.common.util.Response;
 import edu.fudan.common.util.StringUtils;
+import jakarta.transaction.Transactional;
 import org.apache.skywalking.apm.toolkit.trace.TraceCrossThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +26,13 @@ import travel.entity.Trip;
 import travel.entity.TripAllDetail;
 import travel.repository.TripRepository;
 
-import jakarta.transaction.Transactional;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import static edu.fudan.common.PortMapping.getServiceUrl;
 
 /**
  * @author fdse
@@ -47,10 +52,6 @@ public class TravelServiceImpl implements TravelService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TravelServiceImpl.class);
 
     private static final ExecutorService executorService = Executors.newFixedThreadPool(20, new CustomizableThreadFactory("HttpClientThreadPool-"));
-
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     String success = "Success";
     String noContent = "No Content";

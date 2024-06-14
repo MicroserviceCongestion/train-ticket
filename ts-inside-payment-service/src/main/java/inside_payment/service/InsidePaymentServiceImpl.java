@@ -1,7 +1,7 @@
 package inside_payment.service;
 
-import edu.fudan.common.entity.OrderStatus;
 import edu.fudan.common.entity.Order;
+import edu.fudan.common.entity.OrderStatus;
 import edu.fudan.common.util.Response;
 import inside_payment.entity.*;
 import inside_payment.repository.AddMoneyRepository;
@@ -9,7 +9,6 @@ import inside_payment.repository.PaymentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.*;
+
+import static edu.fudan.common.PortMapping.getServiceUrl;
 
 /**
  * @author fdse
@@ -37,10 +38,6 @@ public class InsidePaymentServiceImpl implements InsidePaymentService {
     public RestTemplate restTemplate;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InsidePaymentServiceImpl.class);
-
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     @Override
     public Response pay(PaymentInfo info, HttpHeaders headers) {

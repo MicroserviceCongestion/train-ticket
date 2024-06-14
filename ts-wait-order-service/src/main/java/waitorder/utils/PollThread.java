@@ -1,5 +1,6 @@
 package waitorder.utils;
 
+import edu.fudan.common.PortMapping;
 import edu.fudan.common.entity.Contacts;
 import edu.fudan.common.util.Response;
 import org.springframework.core.ParameterizedTypeReference;
@@ -40,7 +41,7 @@ public class PollThread extends Thread{
 
     @Override
     public void run() {
-        String service_url=getServiceUrl("ts-preserve-service");
+        String service_url = PortMapping.getServiceUrl("ts-preserve-service");
         HttpEntity requestEntityPreserve = new HttpEntity(waitListOrderVO,httpHeaders);
 
         //TODO compare with waitUntilTime
@@ -67,9 +68,6 @@ public class PollThread extends Thread{
         }
     }
 
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     private Response doPreserve(String url, HttpEntity requestParam){
         ResponseEntity<Response<Contacts>> rePostPreserveResult = restTemplate.exchange(

@@ -5,10 +5,7 @@ import edu.fudan.common.util.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,11 +17,11 @@ import org.springframework.web.client.RestTemplate;
 import security.entity.SecurityConfig;
 import security.repository.SecurityRepository;
 
-
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
+
+import static edu.fudan.common.PortMapping.getServiceUrl;
 
 /**
  * @author fdse
@@ -43,9 +40,6 @@ public class SecurityServiceImpl implements SecurityService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     String success = "Success";
 

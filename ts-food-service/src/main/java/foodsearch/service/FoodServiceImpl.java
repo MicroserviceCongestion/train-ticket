@@ -1,12 +1,13 @@
 package foodsearch.service;
 
 import edu.fudan.common.entity.Food;
+import edu.fudan.common.entity.Route;
 import edu.fudan.common.entity.StationFoodStore;
-import edu.fudan.common.entity.TrainFood;
 import edu.fudan.common.util.JsonUtils;
 import edu.fudan.common.util.Response;
-import edu.fudan.common.entity.Route;
-import foodsearch.entity.*;
+import foodsearch.entity.AllTripFood;
+import foodsearch.entity.Delivery;
+import foodsearch.entity.FoodOrder;
 import foodsearch.mq.RabbitSend;
 import foodsearch.repository.FoodOrderRepository;
 import org.slf4j.Logger;
@@ -22,12 +23,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static edu.fudan.common.PortMapping.getServiceUrl;
 
 @Service
 public class FoodServiceImpl implements FoodService {
@@ -45,10 +44,6 @@ public class FoodServiceImpl implements FoodService {
     private DiscoveryClient discoveryClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FoodServiceImpl.class);
-
-    private String getServiceUrl(String serviceName) {
-        return "http://" + serviceName;
-    }
 
     String success = "Success.";
     String orderIdNotExist = "Order Id Is Non-Existent.";
