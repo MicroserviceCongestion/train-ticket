@@ -61,6 +61,8 @@ services:
     build: ts-user-service
     image: ${IMG_REPO}/ts-user-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-user-mysql
     ports:
       - 12342:12342
     networks:
@@ -68,6 +70,8 @@ services:
 
   ts-user-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -90,6 +94,8 @@ services:
     build: ts-route-service
     image: ${IMG_REPO}/ts-route-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-route-mysql
     ports:
       - 11178:11178
     networks:
@@ -97,6 +103,8 @@ services:
 
   ts-route-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -104,6 +112,8 @@ services:
     build: ts-contacts-service
     image: ${IMG_REPO}/ts-contacts-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-contacts-mysql
     ports:
       - 12347:12347
     networks:
@@ -111,6 +121,8 @@ services:
 
   ts-contacts-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -118,6 +130,8 @@ services:
     build: ts-order-service
     image: ${IMG_REPO}/ts-order-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-order-mysql
     ports:
       - 12031:12031
     networks:
@@ -125,6 +139,8 @@ services:
 
   ts-order-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -132,6 +148,8 @@ services:
     build: ts-order-other-service
     image: ${IMG_REPO}/ts-order-other-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-order-other-mysql
     ports:
       - 12032:12032
     networks:
@@ -139,6 +157,8 @@ services:
 
   ts-order-other-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -146,6 +166,8 @@ services:
     build: ts-config-service
     image: ${IMG_REPO}/ts-config-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-config-mysql
     ports:
       - 15679:15679
     networks:
@@ -153,6 +175,8 @@ services:
 
   ts-config-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -160,6 +184,8 @@ services:
     build: ts-station-service
     image: ${IMG_REPO}/ts-station-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-station-mysql
     ports:
       - 12345:12345
     networks:
@@ -167,6 +193,8 @@ services:
 
   ts-station-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -174,6 +202,8 @@ services:
     build: ts-train-service
     image: ${IMG_REPO}/ts-train-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-train-mysql
     ports:
       - 14567:14567
     networks:
@@ -181,6 +211,8 @@ services:
 
   ts-train-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -188,6 +220,8 @@ services:
     build: ts-travel-service
     image: ${IMG_REPO}/ts-travel-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-travel-mysql
     ports:
       - 12346:12346
     networks:
@@ -195,6 +229,8 @@ services:
 
   ts-travel-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -202,6 +238,8 @@ services:
       build: ts-travel2-service
       image: ${IMG_REPO}/ts-travel2-service:${IMG_TAG}
       restart: always
+      depends_on:
+        - ts-travel2-mysql
       ports:
         - 16346:16346
       networks:
@@ -209,6 +247,8 @@ services:
 
   ts-travel2-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -252,6 +292,8 @@ services:
     build: ts-price-service
     image: ${IMG_REPO}/ts-price-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-price-mysql
     ports:
       - 16579:16579
     networks:
@@ -259,6 +301,8 @@ services:
 
   ts-price-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -266,6 +310,8 @@ services:
     build: ts-notification-service
     image: ${IMG_REPO}/ts-notification-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-notification-mysql
     ports:
       - 17853:17853
     networks:
@@ -273,6 +319,8 @@ services:
 
   ts-notification-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -280,6 +328,8 @@ services:
     build: ts-security-service
     image: ${IMG_REPO}/ts-security-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-security-mysql
     ports:
       - 11188:11188
     networks:
@@ -287,6 +337,8 @@ services:
 
   ts-security-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -294,6 +346,8 @@ services:
     build: ts-inside-payment-service
     image: ${IMG_REPO}/ts-inside-payment-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-inside-payment-mysql
     ports:
       - 18673:18673
     networks:
@@ -301,6 +355,8 @@ services:
 
   ts-inside-payment-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -317,6 +373,8 @@ services:
     build: ts-payment-service
     image: ${IMG_REPO}/ts-payment-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-payment-mysql
     ports:
       - 19001:19001
     networks:
@@ -324,6 +382,8 @@ services:
 
   ts-payment-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -331,6 +391,8 @@ services:
     build: ts-rebook-service
     image: ${IMG_REPO}/ts-rebook-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-rebook-mysql
     ports:
       - 18886:18886
     networks:
@@ -338,6 +400,8 @@ services:
 
   ts-rebook-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -354,6 +418,8 @@ services:
     build: ts-assurance-service
     image: ${IMG_REPO}/ts-assurance-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-assurance-mysql
     ports:
       - 18888:18888
     networks:
@@ -361,6 +427,8 @@ services:
 
   ts-assurance-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -399,6 +467,8 @@ services:
     build: ts-news-service
     image: ${IMG_REPO}/ts-news-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-news-mysql
     ports:
       - 12862:12862
     networks:
@@ -406,15 +476,15 @@ services:
 
   ts-news-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
   ts-voucher-mysql:
     image: mysql
-    expose:
-      - "3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -457,8 +527,17 @@ services:
     build: ts-food-service
     image: ${IMG_REPO}/ts-food-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-food-mysql
     ports:
       - 18856:18856
+    networks:
+      - my-network
+
+  ts-food-mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -466,6 +545,8 @@ services:
     build: ts-consign-service
     image: ${IMG_REPO}/ts-consign-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-consign-mysql
     ports:
       - 16111:16111
     networks:
@@ -473,6 +554,8 @@ services:
 
   ts-consign-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -480,6 +563,8 @@ services:
     build: ts-consign-price-service
     image: ${IMG_REPO}/ts-consign-price-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-consign-price-mysql
     ports:
       - 16110:16110
     networks:
@@ -487,11 +572,8 @@ services:
 
   ts-consign-price-mysql:
     image: mysql
-    networks:
-      - my-network
-
-  ts-food-mysql:
-    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -565,6 +647,8 @@ services:
     build: ts-delivery-service
     image: ${IMG_REPO}/ts-delivery-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-delivery-mysql
     ports:
       - 18808:18808
     networks:
@@ -572,6 +656,8 @@ services:
 
   ts-delivery-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -579,6 +665,8 @@ services:
     build: ts-food-delivery-service
     image: ${IMG_REPO}/ts-food-delivery-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-food-delivery-mysql
     ports:
       - 18957:18957
     networks:
@@ -586,6 +674,8 @@ services:
 
   ts-food-delivery-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -598,16 +688,12 @@ services:
     networks:
       - my-network
 
-  ts-gateway-mysql:
-    image: mysql
-    networks:
-      - my-network
-
-
   ts-station-food-service:
     build: ts-station-food-service
     image: ${IMG_REPO}/ts-station-food-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-station-food-mysql
     ports:
       - 18855:18855
     networks:
@@ -615,6 +701,8 @@ services:
 
   ts-station-food-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
@@ -623,6 +711,8 @@ services:
     build: ts-train-food-service
     image: ${IMG_REPO}/ts-train-food-service:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-train-food-mysql
     ports:
       - 19999:19999
     networks:
@@ -630,6 +720,8 @@ services:
 
   ts-train-food-mysql:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - my-network
 
