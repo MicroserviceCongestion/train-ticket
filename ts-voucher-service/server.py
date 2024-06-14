@@ -1,9 +1,9 @@
 #coding:utf-8
-import tornado.ioloop
-import tornado.web
 import json
 import os
 import pymysql
+import tornado.ioloop
+import tornado.web
 import urllib
 import urllib.request
 
@@ -103,7 +103,24 @@ def make_app():
 
 def initDatabase():
     # Create a connection
-    print(mysql_config)
+    print(mysql_config, flush=True)
+    print('try to connect to mysql...', flush=True)
+    connect = pymysql.connect(
+        host=mysql_config['host'],
+        port=mysql_config['port'],
+        user=mysql_config['user'],
+        password=mysql_config['password']
+    )
+    cur = connect.cursor()
+    sql = "CREATE DATABASE IF NOT EXISTS " + mysql_config['database']
+    try:
+        cur.execute(sql)
+        connect.commit()
+    finally:
+        connect.close()
+
+
+def initTable():
     connect = pymysql.connect(**mysql_config)
     cur = connect.cursor()
 
@@ -151,7 +168,7 @@ def initMysqlConfig():
         'port': port,
         'user': user,
         'password': password,
-        'db': db
+        'database': db.replace('-', '_')
     }
 
 
@@ -159,6 +176,8 @@ if __name__ == "__main__":
     #Create database and tables
     initMysqlConfig()
     initDatabase()
+    initTable()
+    print('successfully init database', flush=True)
     app = make_app()
     app.listen(16101)
     tornado.ioloop.IOLoop.current().start()
