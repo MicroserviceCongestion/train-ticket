@@ -23,8 +23,8 @@ services:
       - my-network
 
   mysql:
-    build: mysql
-    image: ${IMG_REPO}/mysql
+    image: mysql
+    command: [ "--max_connections=${MYSQL_MAX_CONNECTIONS}" ]
     restart: always
     env_file:
       - env/ts-mysql.env
@@ -489,6 +489,8 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_started
+    ports:
+      - 18856:18856
     networks:
       - my-network
 
@@ -579,6 +581,8 @@ services:
     depends_on:
       nacos:
         condition: service_healthy
+    ports:
+      - 16115:16115
     networks:
       - my-network
 
