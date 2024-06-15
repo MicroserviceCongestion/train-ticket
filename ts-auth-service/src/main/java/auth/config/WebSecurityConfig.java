@@ -76,7 +76,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/v1/auth", "/api/v1/auth/hello", "/api/v1/user/hello").permitAll()
+                        .requestMatchers("/api/v1/auth", "/api/v1/auth/hello", "/api/v1/users/hello").permitAll()
                         .requestMatchers("/api/v1/users/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/users").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/users/*").hasRole("ADMIN")
