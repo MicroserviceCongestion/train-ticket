@@ -51,7 +51,7 @@ spring:
             - Path=/api/v1/auth/**
 
         - id: auth-user
-          uri: lb://${AUTH_SERVICE_HOST:ts-auth-service}:${AUTH_SERVICE_PORT:12340}
+          uri: http://${AUTH_SERVICE_HOST:ts-auth-service}:${AUTH_SERVICE_PORT:12340}
           predicates:
             - Path=/api/v1/users/**
 
