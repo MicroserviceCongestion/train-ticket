@@ -9,25 +9,40 @@ services:
     env_file:
       - env/nacos-standalone.env
     restart: always
-
-  redis:
-    image: redis
-    ports:
-      - 6379:6379
-    networks:
-      - my-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8848/nacos" ]
+      interval: 1m
+      start_period: 30s
 
   rabbitmq:
+    restart: always
     image: rabbitmq
     ports:
       - 5672:5672
     networks:
       - my-network
 
+  mysql:
+    build: mysql
+    image: ${IMG_REPO}/mysql
+    restart: always
+    env_file:
+      - env/ts-mysql.env
+    networks:
+      - my-network
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-u", "${MYSQL_AUTH_USER}", "-p${MYSQL_AUTH_PASSWORD}" ]
+      interval: 1m
+      start_period: 30s
+
   ts-ui-dashboard:
     build: ts-ui-dashboard
     image: ${IMG_REPO}/ts-ui-dashboard:${IMG_TAG}
     restart: always
+    depends_on:
+      - ts-gateway-service
     ports:
       - 8080:8080
     networks:
@@ -37,18 +52,15 @@ services:
     build: ts-auth-service
     image: ${IMG_REPO}/ts-auth-service:${IMG_TAG}
     restart: always
+    environment:
+      AUTH_MYSQL_HOST: mysql
     depends_on:
-      - ts-auth-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 12340:12340
-    networks:
-      - my-network
-
-  ts-auth-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -56,18 +68,15 @@ services:
     build: ts-user-service
     image: ${IMG_REPO}/ts-user-service:${IMG_TAG}
     restart: always
+    environment:
+      USER_MYSQL_HOST: mysql
     depends_on:
-      - ts-user-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 12342:12342
-    networks:
-      - my-network
-
-  ts-user-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -76,7 +85,8 @@ services:
     image: ${IMG_REPO}/ts-verification-code-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 15678:15678
     networks:
@@ -86,18 +96,15 @@ services:
     build: ts-route-service
     image: ${IMG_REPO}/ts-route-service:${IMG_TAG}
     restart: always
+    environment:
+      ROUTE_MYSQL_HOST: mysql
     depends_on:
-      - ts-route-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 11178:11178
-    networks:
-      - my-network
-
-  ts-route-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -105,37 +112,32 @@ services:
     build: ts-contacts-service
     image: ${IMG_REPO}/ts-contacts-service:${IMG_TAG}
     restart: always
+    environment:
+      CONTACTS_MYSQL_HOST: mysql
     depends_on:
-      - ts-contacts-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 12347:12347
     networks:
       - my-network
 
-  ts-contacts-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
-    networks:
-      - my-network
 
   ts-order-service:
     build: ts-order-service
     image: ${IMG_REPO}/ts-order-service:${IMG_TAG}
     restart: always
+    environment:
+      ORDER_MYSQL_HOST: mysql
     depends_on:
-      - ts-order-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 12031:12031
-    networks:
-      - my-network
-
-  ts-order-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -143,18 +145,15 @@ services:
     build: ts-order-other-service
     image: ${IMG_REPO}/ts-order-other-service:${IMG_TAG}
     restart: always
+    environment:
+      ORDER_OTHER_MYSQL_HOST: mysql
     depends_on:
-      - ts-order-other-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 12032:12032
-    networks:
-      - my-network
-
-  ts-order-other-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -162,18 +161,15 @@ services:
     build: ts-config-service
     image: ${IMG_REPO}/ts-config-service:${IMG_TAG}
     restart: always
+    environment:
+      CONFIG_MYSQL_HOST: mysql
     depends_on:
-      - ts-config-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 15679:15679
-    networks:
-      - my-network
-
-  ts-config-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -181,18 +177,15 @@ services:
     build: ts-station-service
     image: ${IMG_REPO}/ts-station-service:${IMG_TAG}
     restart: always
+    environment:
+      STATION_MYSQL_HOST: mysql
     depends_on:
-      - ts-station-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 12345:12345
-    networks:
-      - my-network
-
-  ts-station-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -200,18 +193,15 @@ services:
     build: ts-train-service
     image: ${IMG_REPO}/ts-train-service:${IMG_TAG}
     restart: always
+    environment:
+      TRAIN_MYSQL_HOST: mysql
     depends_on:
-      - ts-train-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 14567:14567
-    networks:
-      - my-network
-
-  ts-train-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -219,37 +209,31 @@ services:
     build: ts-travel-service
     image: ${IMG_REPO}/ts-travel-service:${IMG_TAG}
     restart: always
+    environment:
+      TRAVEL_MYSQL_HOST: mysql
     depends_on:
-      - ts-travel-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 12346:12346
     networks:
       - my-network
 
-  ts-travel-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
-    networks:
-      - my-network
-
   ts-travel2-service:
-      build: ts-travel2-service
-      image: ${IMG_REPO}/ts-travel2-service:${IMG_TAG}
-      restart: always
-      depends_on:
-        - ts-travel2-mysql
-        - nacos
-      ports:
-        - 16346:16346
-      networks:
-        - my-network
-
-  ts-travel2-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
+    build: ts-travel2-service
+    image: ${IMG_REPO}/ts-travel2-service:${IMG_TAG}
+    restart: always
+    environment:
+      TRAVEL2_MYSQL_HOST: mysql
+    depends_on:
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+    ports:
+      - 16346:16346
     networks:
       - my-network
 
@@ -258,8 +242,10 @@ services:
     image: ${IMG_REPO}/ts-preserve-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
-      - rabbitmq
+      nacos:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
     ports:
       - 14568:14568
     networks:
@@ -270,8 +256,10 @@ services:
     image: ${IMG_REPO}/ts-preserve-other-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
-      - rabbitmq
+      nacos:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
     ports:
       - 14569:14569
     networks:
@@ -282,7 +270,8 @@ services:
     image: ${IMG_REPO}/ts-basic-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 15680:15680
     networks:
@@ -292,18 +281,15 @@ services:
     build: ts-price-service
     image: ${IMG_REPO}/ts-price-service:${IMG_TAG}
     restart: always
+    environment:
+      PRICE_MYSQL_HOST: mysql
     depends_on:
-      - ts-price-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 16579:16579
-    networks:
-      - my-network
-
-  ts-price-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -311,57 +297,51 @@ services:
     build: ts-notification-service
     image: ${IMG_REPO}/ts-notification-service:${IMG_TAG}
     restart: always
+    environment:
+      NOTIFICATION_MYSQL_HOST: mysql
     depends_on:
-      - ts-notification-mysql
-      - nacos
-      - rabbitmq
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
     ports:
       - 17853:17853
     networks:
       - my-network
 
-  ts-notification-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
-    networks:
-      - my-network
 
   ts-security-service:
     build: ts-security-service
     image: ${IMG_REPO}/ts-security-service:${IMG_TAG}
     restart: always
+    environment:
+      SECURITY_MYSQL_HOST: mysql
     depends_on:
-      - ts-security-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 11188:11188
     networks:
       - my-network
 
-  ts-security-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
-    networks:
-      - my-network
 
   ts-inside-payment-service:
     build: ts-inside-payment-service
     image: ${IMG_REPO}/ts-inside-payment-service:${IMG_TAG}
     restart: always
+    environment:
+      INSIDE_PAYMENT_MYSQL_HOST: mysql
     depends_on:
-      - ts-inside-payment-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 18673:18673
-    networks:
-      - my-network
-
-  ts-inside-payment-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -370,7 +350,8 @@ services:
     image: ${IMG_REPO}/ts-execute-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 12386:12386
     networks:
@@ -380,18 +361,15 @@ services:
     build: ts-payment-service
     image: ${IMG_REPO}/ts-payment-service:${IMG_TAG}
     restart: always
+    environment:
+      PAYMENT_MYSQL_HOST: mysql
     depends_on:
-      - ts-payment-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 19001:19001
-    networks:
-      - my-network
-
-  ts-payment-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -399,18 +377,15 @@ services:
     build: ts-rebook-service
     image: ${IMG_REPO}/ts-rebook-service:${IMG_TAG}
     restart: always
+    environment:
+      REBOOK_MYSQL_HOST: mysql
     depends_on:
-      - ts-rebook-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 18886:18886
-    networks:
-      - my-network
-
-  ts-rebook-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -419,7 +394,8 @@ services:
     image: ${IMG_REPO}/ts-cancel-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 18885:18885
     networks:
@@ -429,18 +405,15 @@ services:
     build: ts-assurance-service
     image: ${IMG_REPO}/ts-assurance-service:${IMG_TAG}
     restart: always
+    environment:
+      ASSURANCE_MYSQL_HOST: mysql
     depends_on:
-      - ts-assurance-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
-      - 18888:18888
-    networks:
-      - my-network
-
-  ts-assurance-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
+      - 18889:18888 # Mapping to a different port to avoid conflict with ts-gateway-service
     networks:
       - my-network
 
@@ -449,7 +422,8 @@ services:
     image: ${IMG_REPO}/ts-seat-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 18898:18898
     networks:
@@ -460,7 +434,8 @@ services:
     image: ${IMG_REPO}/ts-travel-plan-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 14322:14322
     networks:
@@ -479,17 +454,13 @@ services:
     build: ts-voucher-service
     image: ${IMG_REPO}/ts-voucher-service:${IMG_TAG}
     restart: always
+    environment:
+      VOUCHER_MYSQL_HOST: mysql
     ports:
       - 16101:16101
     depends_on:
-      - ts-voucher-mysql
-    networks:
-      - my-network
-
-  ts-voucher-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
+      mysql:
+        condition: service_healthy
     networks:
       - my-network
 
@@ -498,7 +469,8 @@ services:
     image: ${IMG_REPO}/ts-route-plan-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 14578:14578
     networks:
@@ -508,19 +480,15 @@ services:
     build: ts-food-service
     image: ${IMG_REPO}/ts-food-service:${IMG_TAG}
     restart: always
+    environment:
+      FOOD_MYSQL_HOST: mysql
     depends_on:
-      - ts-food-mysql
-      - rabbitmq
-      - nacos
-    ports:
-      - 18856:18856
-    networks:
-      - my-network
-
-  ts-food-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
     networks:
       - my-network
 
@@ -528,18 +496,15 @@ services:
     build: ts-consign-service
     image: ${IMG_REPO}/ts-consign-service:${IMG_TAG}
     restart: always
+    environment:
+      CONSIGN_MYSQL_HOST: mysql
     depends_on:
-      - ts-consign-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 16111:16111
-    networks:
-      - my-network
-
-  ts-consign-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -547,18 +512,15 @@ services:
     build: ts-consign-price-service
     image: ${IMG_REPO}/ts-consign-price-service:${IMG_TAG}
     restart: always
+    environment:
+      CONSIGN_PRICE_MYSQL_HOST: mysql
     depends_on:
-      - ts-consign-price-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 16110:16110
-    networks:
-      - my-network
-
-  ts-consign-price-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -567,7 +529,8 @@ services:
     image: ${IMG_REPO}/ts-admin-basic-info-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 18767:18767
     networks:
@@ -578,7 +541,8 @@ services:
     image: ${IMG_REPO}/ts-admin-order-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 16112:16112
     networks:
@@ -589,7 +553,8 @@ services:
     image: ${IMG_REPO}/ts-admin-route-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 16113:16113
     networks:
@@ -600,7 +565,8 @@ services:
     image: ${IMG_REPO}/ts-admin-travel-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 16114:16114
     networks:
@@ -611,9 +577,8 @@ services:
     image: ${IMG_REPO}/ts-admin-user-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
-    ports:
-      - 16115:16115
+      nacos:
+        condition: service_healthy
     networks:
       - my-network
 
@@ -630,19 +595,17 @@ services:
     build: ts-delivery-service
     image: ${IMG_REPO}/ts-delivery-service:${IMG_TAG}
     restart: always
+    environment:
+      DELIVERY_MYSQL_HOST: mysql
     depends_on:
-      - ts-delivery-mysql
-      - nacos
-      - rabbitmq
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
     ports:
       - 18808:18808
-    networks:
-      - my-network
-
-  ts-delivery-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -650,18 +613,15 @@ services:
     build: ts-food-delivery-service
     image: ${IMG_REPO}/ts-food-delivery-service:${IMG_TAG}
     restart: always
+    environment:
+      FOOD_DELIVERY_MYSQL_HOST: mysql
     depends_on:
-      - ts-food-delivery-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 18957:18957
-    networks:
-      - my-network
-
-  ts-food-delivery-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
     networks:
       - my-network
 
@@ -670,7 +630,8 @@ services:
     image: ${IMG_REPO}/ts-gateway-service:${IMG_TAG}
     restart: always
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
     ports:
       - 18888:18888
     networks:
@@ -680,41 +641,33 @@ services:
     build: ts-station-food-service
     image: ${IMG_REPO}/ts-station-food-service:${IMG_TAG}
     restart: always
+    environment:
+      STATION_FOOD_MYSQL_HOST: mysql
     depends_on:
-      - ts-station-food-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 18855:18855
     networks:
       - my-network
 
-  ts-station-food-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
-    networks:
-      - my-network
-
-
   ts-train-food-service:
     build: ts-train-food-service
     image: ${IMG_REPO}/ts-train-food-service:${IMG_TAG}
     restart: always
+    environment:
+      TRAIN_FOOD_MYSQL_HOST: mysql
     depends_on:
-      - ts-train-food-mysql
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
     ports:
       - 19999:19999
     networks:
       - my-network
-
-  ts-train-food-mysql:
-    image: mysql
-    env_file:
-      - env/ts-mysql.env
-    networks:
-      - my-network
-
 
 networks:
   my-network:
