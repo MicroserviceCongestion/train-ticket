@@ -259,6 +259,7 @@ services:
     restart: always
     depends_on:
       - nacos
+      - rabbitmq
     ports:
       - 14568:14568
     networks:
@@ -270,6 +271,7 @@ services:
     restart: always
     depends_on:
       - nacos
+      - rabbitmq
     ports:
       - 14569:14569
     networks:
@@ -312,6 +314,7 @@ services:
     depends_on:
       - ts-notification-mysql
       - nacos
+      - rabbitmq
     ports:
       - 17853:17853
     networks:
@@ -480,8 +483,6 @@ services:
       - 16101:16101
     depends_on:
       - ts-voucher-mysql
-    volumes:
-      - /var/lib/mysql
     networks:
       - my-network
 
@@ -509,6 +510,7 @@ services:
     restart: always
     depends_on:
       - ts-food-mysql
+      - rabbitmq
       - nacos
     ports:
       - 18856:18856
@@ -631,6 +633,7 @@ services:
     depends_on:
       - ts-delivery-mysql
       - nacos
+      - rabbitmq
     ports:
       - 18808:18808
     networks:

@@ -13,7 +13,7 @@ spring:
     username: ${DELIVERY_MYSQL_USER:root}
     password: ${DELIVERY_MYSQL_PASSWORD:Abcd1234#}
   rabbitmq:
-    host: ${rabbitmq_host:localhost}
+    host: ${rabbitmq_host:rabbitmq}
     port: 5672
   jpa:
     hibernate:

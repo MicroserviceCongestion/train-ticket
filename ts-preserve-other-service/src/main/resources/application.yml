@@ -19,7 +19,7 @@ spring:
   application:
     name: ts-preserve-other-service
   rabbitmq:
-    host: ${rabbitmq_host:localhost}
+    host: ${rabbitmq_host:rabbitmq}
     port: 5672
 
 swagger:
