@@ -1,13 +1,11 @@
 package inside_payment.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import jakarta.persistence.*;
-//import org.springframework.data.mongodb.core.mapping.Document;
-
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 /**
@@ -44,6 +42,7 @@ public class Payment {
     private PaymentType type;
 
     public Payment(){
+        this.id = UUID.randomUUID().toString();
         this.orderId = "";
         this.userId = "";
         this.price = "";

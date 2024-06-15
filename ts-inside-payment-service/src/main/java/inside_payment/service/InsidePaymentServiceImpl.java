@@ -41,9 +41,6 @@ public class InsidePaymentServiceImpl implements InsidePaymentService {
 
     @Override
     public Response pay(PaymentInfo info, HttpHeaders headers) {
-
-        String userId = info.getUserId();
-
         String requestOrderURL = "";
         String order_service_url = getServiceUrl("ts-order-service");
         String order_other_service_url = getServiceUrl("ts-order-other-service");
@@ -68,6 +65,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService {
                 InsidePaymentServiceImpl.LOGGER.warn("[Inside Payment Service.pay][Order status Not allowed to Pay]");
                 return new Response<>(0, "Error. Order status Not allowed to Pay.", null);
             }
+            String userId = order.getAccountId();
 
             Payment payment = new Payment();
             payment.setOrderId(info.getOrderId());
